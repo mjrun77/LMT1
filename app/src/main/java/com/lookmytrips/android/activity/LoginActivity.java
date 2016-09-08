@@ -47,9 +47,9 @@ public class LoginActivity extends AppCompatActivity implements FragmentManager.
     private void homeAsUpByBackStack() {
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount > 0) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  //          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
     }
 

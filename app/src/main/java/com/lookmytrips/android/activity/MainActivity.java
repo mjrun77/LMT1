@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -27,15 +26,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.lookmytrips.android.R;
 import com.lookmytrips.android.adapters.ViewPagerAdapter;
 import com.lookmytrips.android.fragments.FeedInterestingFragment;
 import com.lookmytrips.android.fragments.FeedNewFragment;
 import com.lookmytrips.android.fragments.FeedPopularFragment;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,10 +46,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
-import br.com.mauker.materialsearchview.MaterialSearchView;
-
-
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,78 +83,60 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton actionC = (FloatingActionButton) findViewById(R.id.add_photo);
+        actionC.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                selectImage();
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Add photo", Toast.LENGTH_SHORT).show();
             }
         });
 
+        FloatingActionButton actionb = (FloatingActionButton) findViewById(R.id.add_albom);
+        //   actionb.setTitle("Добавить альбом");
+        actionb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Crteate album", Toast.LENGTH_SHORT).show();
+
+            }
+        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setVoiceSearch(true);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                //Do some magic
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                //Do some magic
                 return false;
             }
         });
 
-        searchView.setSearchViewListener(new MaterialSearchView.SearchViewListener() {
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
-            public void onSearchViewOpened() {
-                // Do something once the view is open.
+            public void onSearchViewShown() {
+                //Do some magic
             }
 
             @Override
             public void onSearchViewClosed() {
-                // Do something once the view is closed.
+                //Do some magic
             }
         });
-
-        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Do something when the suggestion list is clicked.
-                String suggestion = searchView.getSuggestionAtPosition(position);
-
-                searchView.setQuery(suggestion, false);
-            }
-        });
-
-//        searchView.setTintAlpha(200);
-        searchView.adjustTintAlpha(0.8f);
-
-        final Context context = this;
-        searchView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(context, "Long clicked position: " + i, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
-        searchView.setOnVoiceClickedListener(new MaterialSearchView.OnVoiceClickedListener() {
-            @Override
-            public void onVoiceClicked() {
-                Toast.makeText(context, "Voice clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -164,6 +145,13 @@ public class MainActivity extends AppCompatActivity
         adapter.addFrag(new FeedInterestingFragment(), getResources().getString(R.string.feedInterestingFragment));
         adapter.addFrag(new FeedNewFragment(), getResources().getString(R.string.feedNewFragment));
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
     }
 
     @Override
@@ -178,12 +166,11 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
 
-        if (searchView.isOpen()) {
-            // Close the search on the back button press.
-            searchView.closeSearch();
-        } else {
-            super.onBackPressed();
-        }
+            if (searchView.isSearchOpen()) {
+                searchView.closeSearch();
+            } else {
+                super.onBackPressed();
+            }
 
     }
 
@@ -191,6 +178,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return true;
     }
 
@@ -202,9 +191,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_bell:
                 Toast.makeText(this, "Soon", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.action_search:
-                searchView.openSearch();
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -243,7 +230,6 @@ public class MainActivity extends AppCompatActivity
         if (file.exists()) {
             file.delete();
             file = new File(extStorageDirectory, "temp.png");
-
         }
 
         try {
@@ -296,22 +282,16 @@ public class MainActivity extends AppCompatActivity
         });
 
         builder.show();
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        searchView.clearSuggestions();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        searchView.activityResumed();
-        String[] arr = getResources().getStringArray(R.array.query_suggestions);
-
-        searchView.addSuggestions(arr);
     }
 
     @Override
@@ -338,103 +318,63 @@ public class MainActivity extends AppCompatActivity
                 File f = new File(Environment.getExternalStorageDirectory().toString());
 
                 for (File temp : f.listFiles()) {
-
                     if (temp.getName().equals("temp.jpg")) {
-
                         f = temp;
                         File photo = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
                         //pic = photo;
                         break;
 
                     }
-
                 }
 
                 try {
-
                     Bitmap bitmap;
-
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 
-
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
-
                             bitmapOptions);
-
-
                     a.setImageBitmap(bitmap);
 
-
                     String path = Environment
-
                             .getExternalStorageDirectory()
-
                             + File.separator
-
                             + "Phoenix" + File.separator + "default";
                     //p = path;
-
                     f.delete();
-
                     OutputStream outFile = null;
-
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     try {
-
                         outFile = new FileOutputStream(file);
-
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
                         //pic=file;
                         outFile.flush();
-
                         outFile.close();
 
-
                     } catch (FileNotFoundException e) {
-
                         e.printStackTrace();
-
                     } catch (IOException e) {
-
                         e.printStackTrace();
-
                     } catch (Exception e) {
-
                         e.printStackTrace();
-
                     }
 
                 } catch (Exception e) {
-
                     e.printStackTrace();
-
                 }
 
             } else if (requestCode == 2) {
-
-
                 Uri selectedImage = data.getData();
                 // h=1;
                 //imgui = selectedImage;
                 String[] filePath = {MediaStore.Images.Media.DATA};
-
                 Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
-
                 c.moveToFirst();
-
                 int columnIndex = c.getColumnIndex(filePath[0]);
-
                 String picturePath = c.getString(columnIndex);
-
                 c.close();
-
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-
-
                 Log.w("path of image", picturePath + "");
-
-
                 a.setImageBitmap(thumbnail);
 
             }

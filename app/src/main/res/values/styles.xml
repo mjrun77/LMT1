@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -22,17 +22,45 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="MaterialSearchViewStyle">
-        <item name="searchBackground">@color/white_ish</item>
-        <item name="searchVoiceIcon">@drawable/ic_action_voice_search</item>
-        <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
-        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
-        <item name="searchSuggestionBackground">@color/search_layover_bg</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/gray_50</item>
+        <!-- Background for the search bar -->
+        <item name="searchBackground">@color/colorPrimary</item>
+
+        <!-- Change voice icon -->
+        <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>
+
+        <!-- Change clear text icon -->
+        <item name="searchCloseIcon">@drawable/ic_action_navigation_close_inverted</item>
+
+        <!-- Change up icon -->
+        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back_inverted</item>
+
+        <!-- Change icon for the suggestions -->
+        <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
+
+        <!-- Change background for the suggestions list view -->
+        <item name="searchSuggestionBackground">@android:color/white</item>
+
+        <!-- Change text color for edit text. This will also be the color of the cursor -->
+        <item name="android:textColor">@color/white</item>
+
+        <!-- Change hint text color for edit text -->
+        <item name="android:textColorHint">@color/grey_light</item>
+
+        <!-- Hint for edit text -->
         <item name="android:hint">@string/search_hint</item>
-        <item name="android:inputType">textCapWords</item>
     </style>
 
 </resources>

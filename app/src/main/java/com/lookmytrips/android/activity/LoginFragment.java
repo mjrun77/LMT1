@@ -1,6 +1,7 @@
 package com.lookmytrips.android.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
 import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.vk.VkSocialNetwork;
 import com.lookmytrips.android.R;
+import com.lookmytrips.android.utils.Constants;
 import com.vk.sdk.VKScope;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
     private Button odnoklassniki;
     private Button googleplus;
     private TextView tvLookWithout;
+    private SharedPreferences pref;
 
     public LoginFragment() {
     }
@@ -39,8 +42,6 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.login_fragment, container, false);
-        ((LoginActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-        // init buttons and set Listener
         facebook = (Button) rootView.findViewById(R.id.facebook);
         facebook.setOnClickListener(loginClick);
         vk = (Button) rootView.findViewById(R.id.vk);
@@ -56,6 +57,8 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
 //        odnoklassniki.setOnClickListener(loginClick);
         googleplus = (Button) rootView.findViewById(R.id.googleplus);
         googleplus.setOnClickListener(loginClick);
+
+        pref = getActivity().getSharedPreferences(Constants.PREFERENCES_LOGIN, 0);
 
         //Get Keys for initiate SocialNetworks
         String VK_KEY = getActivity().getString(R.string.vk_app_id);
@@ -86,11 +89,6 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
             };
             VkSocialNetwork vkNetwork = new VkSocialNetwork(this, VK_KEY, vkScope);
             mSocialNetworkManager.addSocialNetwork(vkNetwork);
-//
-//            //Init and add to manager LinkedInSocialNetwork
-//            LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, LINKEDIN_CALLBACK_URL, linkedInScope);
-//            mSocialNetworkManager.addSocialNetwork(liNetwork);
-
             //Init and add to manager LinkedInSocialNetwork
             GooglePlusSocialNetwork gpNetwork = new GooglePlusSocialNetwork(this);
             mSocialNetworkManager.addSocialNetwork(gpNetwork);
@@ -104,37 +102,18 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
                 List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
                 for (SocialNetwork socialNetwork : socialNetworks) {
                     socialNetwork.setOnLoginCompleteListener(this);
-  //                  initSocialNetwork(socialNetwork);
                 }
             }
         }
         return rootView;
     }
 
-//    private void initSocialNetwork(SocialNetwork socialNetwork){
-//        if(socialNetwork.isConnected()){
-//            switch (socialNetwork.getID()){
-//                case FacebookSocialNetwork.ID:
-//                    facebook.setText("Show Facebook profile");
-//                    break;
-//                case VkSocialNetwork.ID:
-//                    vk.setText("Show VK profile");
-//                    break;
-////                case LinkedInSocialNetwork.ID:
-////                    odnoklassniki.setText("Show LinkedIn profile");
-////                    break;
-//                case GooglePlusSocialNetwork.ID:
-//                    googleplus.setText("Show GooglePlus profile");
-//                    break;
-//            }
-//        }
-//    }
     @Override
     public void onSocialNetworkManagerInitialized() {
         //when init SocialNetworks - get and setup login only for initialized SocialNetworks
         for (SocialNetwork socialNetwork : mSocialNetworkManager.getInitializedSocialNetworks()) {
             socialNetwork.setOnLoginCompleteListener(this);
-  //          initSocialNetwork(socialNetwork);
+
         }
     }
 
