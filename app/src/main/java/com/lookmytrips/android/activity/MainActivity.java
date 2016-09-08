@@ -3,6 +3,7 @@ package com.lookmytrips.android.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -29,6 +30,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -38,7 +41,10 @@ import com.lookmytrips.android.adapters.ViewPagerAdapter;
 import com.lookmytrips.android.fragments.FeedInterestingFragment;
 import com.lookmytrips.android.fragments.FeedNewFragment;
 import com.lookmytrips.android.fragments.FeedPopularFragment;
+import com.lookmytrips.android.utils.Constants;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,6 +61,11 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private ImageButton a;
     private MaterialSearchView searchView;
+    private SharedPreferences loginPref;
+    private String userId;
+    private String userAvatar;
+    private String userName;
+    private TextView tvUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +73,12 @@ public class MainActivity extends AppCompatActivity
         // portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+        loginPref = getSharedPreferences(Constants.PREFERENCES_LOGIN, 0);
+        userId = loginPref.getString(Constants.USER_ID, "");
+        userAvatar = loginPref.getString(Constants.AVATAR, "");
+        userName = loginPref.getString(Constants.NAME, "");
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -106,9 +123,16 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header=navigationView.getHeaderView(0);
+        tvUserName = (TextView)header.findViewById(R.id.userName);
+        tvUserName.setText(userName);
+        CircularImageView ava = (CircularImageView) header.findViewById(R.id.avatar);
+        Picasso.with(this)
+                .load(userAvatar)
+                .into(ava);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setVoiceSearch(true);
@@ -151,7 +175,6 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
-
     }
 
     @Override
@@ -160,7 +183,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-
 
         } else {
             super.onBackPressed();

@@ -2,6 +2,8 @@ package com.lookmytrips.android.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,6 +25,8 @@ import com.github.gorbin.asne.core.persons.SocialPerson;
 import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
 import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.lookmytrips.android.R;
+import com.lookmytrips.android.model.User;
+import com.lookmytrips.android.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
@@ -39,6 +43,8 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private Button friends;
     private Button share;
     private RelativeLayout frame;
+    private SharedPreferences pref;
+
 
     public static ProfileFragment newInstannce(int id) {
         ProfileFragment fragment = new ProfileFragment();
@@ -56,8 +62,8 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         networkId = getArguments().containsKey(NETWORK_ID) ? getArguments().getInt(NETWORK_ID) : 0;
-        ((LoginActivity)getActivity()).getSupportActionBar().setTitle("Profile");
-
+//        ((LoginActivity)getActivity()).getSupportActionBar().setTitle("Profile");
+        pref = getActivity().getSharedPreferences(Constants.PREFERENCES_LOGIN, 0);
         View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
 
         frame = (RelativeLayout) rootView.findViewById(R.id.frame);
@@ -100,6 +106,16 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     @Override
     public void onRequestSocialPersonSuccess(int i, SocialPerson socialPerson) {
         LoginActivity.hideProgress();
+
+        User user = new User();
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Constants.IS_LOGGED_IN, true);
+        editor.putString(Constants.AVATAR, socialPerson.avatarURL);
+        editor.putString(Constants.USER_ID, socialPerson.id);
+        editor.putString(Constants.NAME, socialPerson.name);
+        editor.apply();
+        startActivity(new Intent(getActivity(), MainActivity.class));
+
         name.setText(socialPerson.name);
         id.setText(socialPerson.id);
         String socialPersonString = socialPerson.toString();

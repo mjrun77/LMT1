@@ -18,6 +18,7 @@ import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
 import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.vk.VkSocialNetwork;
 import com.lookmytrips.android.R;
+import com.lookmytrips.android.model.User;
 import com.lookmytrips.android.utils.Constants;
 import com.vk.sdk.VKScope;
 
@@ -33,7 +34,6 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
     private Button odnoklassniki;
     private Button googleplus;
     private TextView tvLookWithout;
-    private SharedPreferences pref;
 
     public LoginFragment() {
     }
@@ -57,8 +57,6 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
 //        odnoklassniki.setOnClickListener(loginClick);
         googleplus = (Button) rootView.findViewById(R.id.googleplus);
         googleplus.setOnClickListener(loginClick);
-
-        pref = getActivity().getSharedPreferences(Constants.PREFERENCES_LOGIN, 0);
 
         //Get Keys for initiate SocialNetworks
         String VK_KEY = getActivity().getString(R.string.vk_app_id);
@@ -155,6 +153,7 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
     public void onLoginSuccess(int networkId) {
         LoginActivity.hideProgress();
         startProfile(networkId);
+
     }
 
     @Override

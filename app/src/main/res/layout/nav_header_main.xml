@@ -11,13 +11,16 @@
     android:paddingTop="25dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView"
+
+    <com.pkmmte.view.CircularImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:id="@+id/avatar"
+        android:src="@drawable/ic_account_circle"
         android:layout_gravity="center_vertical"
-        app:srcCompat="@drawable/ic_account_circle" />
-
+        app:border="true"
+        android:scaleType="centerCrop"
+        app:border_color="#fff" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -27,6 +30,7 @@
 
 
         <TextView
+            android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
