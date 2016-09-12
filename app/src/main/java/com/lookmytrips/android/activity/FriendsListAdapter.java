@@ -64,8 +64,8 @@ public class FriendsListAdapter extends BaseAdapter {
         if (friends.get(position).avatarURL != null) {
             Picasso.with(context)
                     .load(friends.get(position).avatarURL)
-                    .placeholder(image)
-                    .error(image)
+                    .placeholder(R.mipmap.ic_launcher)
+//                    .error(image)
                     .into(holder.imageView);
         } else {
             holder.imageView.setImageResource(image);

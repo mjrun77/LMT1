@@ -50,7 +50,7 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
 
     @Override
     public void OnGetFriendsIdComplete(int id, String[] friendsID) {
-        ((LoginActivity)getActivity()).getSupportActionBar().setTitle(friendsID.length + " Friends");
+     //   ((LoginActivity)getActivity()).getSupportActionBar().setTitle(friendsID.length + " Friends");
     }
 
     @Override

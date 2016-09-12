@@ -3,7 +3,7 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#B01229</color>
-    <color name="grey_light">#828282</color>
+    <color name="grey_light">#b2ffffff</color>
     <color name="dark">#000000</color>
     <color name="white">#ffffff</color>
 
@@ -23,4 +23,5 @@
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
     <color name="black">#000000</color>
+    <color name="bottom_grey">#8a000000</color>
 </resources>

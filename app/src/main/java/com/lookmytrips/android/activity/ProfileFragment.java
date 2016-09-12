@@ -114,7 +114,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         editor.putString(Constants.USER_ID, socialPerson.id);
         editor.putString(Constants.NAME, socialPerson.name);
         editor.apply();
-        startActivity(new Intent(getActivity(), MainActivity.class));
+     //   startActivity(new Intent(getActivity(), MainActivity.class));
 
         name.setText(socialPerson.name);
         id.setText(socialPerson.id);

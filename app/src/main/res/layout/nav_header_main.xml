@@ -36,6 +36,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="5dp"
             android:text="User name"
+            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
 <LinearLayout
@@ -49,7 +50,7 @@
 
         <ImageView
             android:id="@+id/icon_trophy"
-            android:src="@drawable/ic_trophy"
+            android:src="@drawable/icrating_1_menu"
             android:baselineAlignBottom="true"
             android:layout_width="20dp"
             android:layout_height="25dp" />
@@ -64,7 +65,7 @@
         android:padding="5dp"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-
+        android:textColor="@color/light_grey"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
         </RelativeLayout>
 
@@ -75,7 +76,7 @@
 
         <ImageView
             android:id="@+id/icon_medal"
-            android:src="@drawable/ic_medal"
+            android:src="@drawable/icrating_2_menu"
             android:baselineAlignBottom="true"
             android:layout_width="20dp"
             android:layout_height="25dp" />
@@ -88,6 +89,7 @@
             android:layout_marginLeft="3dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:textColor="@color/light_grey"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
 

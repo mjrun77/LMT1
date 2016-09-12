@@ -15,6 +15,8 @@ import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -38,9 +40,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.lookmytrips.android.R;
 import com.lookmytrips.android.adapters.ViewPagerAdapter;
-import com.lookmytrips.android.fragments.FeedInterestingFragment;
-import com.lookmytrips.android.fragments.FeedNewFragment;
-import com.lookmytrips.android.fragments.FeedPopularFragment;
+import com.lookmytrips.android.fragments.ListNewsFragment;
 import com.lookmytrips.android.utils.Constants;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.pkmmte.view.CircularImageView;
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         actionC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Add photo", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, AddPhotoActivity.class));
             }
         });
 
@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity
         tvUserName = (TextView)header.findViewById(R.id.userName);
         tvUserName.setText(userName);
         CircularImageView ava = (CircularImageView) header.findViewById(R.id.avatar);
-        Picasso.with(this)
-                .load(userAvatar)
-                .into(ava);
+     //   Picasso.with(this)
+         //       .load(userAvatar)
+           //     .into(ava);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setVoiceSearch(true);
@@ -164,11 +164,48 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new FeedPopularFragment(), getResources().getString(R.string.feedPopularFragment));
-        adapter.addFrag(new FeedInterestingFragment(), getResources().getString(R.string.feedInterestingFragment));
-        adapter.addFrag(new FeedNewFragment(), getResources().getString(R.string.feedNewFragment));
-        viewPager.setAdapter(adapter);
+     //   ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.addFrag(new FeedPopularFragment(), getResources().getString(R.string.feedPopularFragment));
+//        adapter.addFrag(new FeedInterestingFragment(), getResources().getString(R.string.feedInterestingFragment));
+//        adapter.addFrag(new FeedNewFragment(), getResources().getString(R.string.feedNewFragment));
+        //viewPager.setAdapter(adapter);
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            Constants c = new Constants();
+
+            @Override
+            public Fragment getItem(int position) {
+                switch (position % 3) {
+                    case 0:
+                        return ListNewsFragment.newInstance();
+                    case 1:
+                        return ListNewsFragment.newInstance();
+
+                    case 2:
+                        return ListNewsFragment.newInstance();
+
+                    default:
+                        return ListNewsFragment.newInstance();
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 3;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position % 4) {
+                    case 0:
+                        return getResources().getString(R.string.feedPopularFragment);
+                    case 1:
+                        return  getResources().getString(R.string.feedInterestingFragment);
+                    case 2:
+                        return getResources().getString(R.string.feedNewFragment);
+                }
+                return "";
+            }
+        });
     }
 
     @Override

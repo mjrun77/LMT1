@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
             };
             VkSocialNetwork vkNetwork = new VkSocialNetwork(this, VK_KEY, vkScope);
             mSocialNetworkManager.addSocialNetwork(vkNetwork);
-            //Init and add to manager LinkedInSocialNetwork
+
             GooglePlusSocialNetwork gpNetwork = new GooglePlusSocialNetwork(this);
             mSocialNetworkManager.addSocialNetwork(gpNetwork);
 
@@ -168,6 +168,8 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
                 .addToBackStack("profile")
                 .replace(R.id.container, profile)
                 .commit();
+
+        startActivity(new Intent(getActivity(), MainActivity.class));
     }
 
 }
