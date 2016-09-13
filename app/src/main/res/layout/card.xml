@@ -87,8 +87,8 @@
                     android:textSize="12sp"
                     android:id="@+id/card_author"
                     android:layout_below="@+id/bg_image"
-                    android:layout_toRightOf="@+id/avatar"
-                    android:layout_toEndOf="@+id/avatar"
+                    android:layout_toRightOf="@+id/card_avatar"
+                    android:layout_toEndOf="@+id/card_avatar"
                     android:layout_marginLeft="16dp" />
 
                 <TextView
@@ -100,13 +100,13 @@
                     android:textSize="16sp"
                     android:id="@+id/card_user_name"
                     android:layout_below="@+id/card_author"
-                    android:layout_toRightOf="@+id/avatar"
+                    android:layout_toRightOf="@+id/card_avatar"
                     android:layout_marginLeft="16dp" />
 
                 <com.pkmmte.view.CircularImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:id="@+id/avatar"
+                    android:id="@+id/card_avatar"
                     android:src="@drawable/ava"
                     app:border="true"
                     android:scaleType="centerCrop"

@@ -84,14 +84,14 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        a = (ImageButton)findViewById(R.id.a);
-        a.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-
-            }
-        });
+//        a = (ImageButton)findViewById(R.id.a);
+//        a.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                selectImage();
+//
+//            }
+//        });
 
         FloatingActionButton actionC = (FloatingActionButton) findViewById(R.id.add_photo);
         actionC.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         View header=navigationView.getHeaderView(0);
         tvUserName = (TextView)header.findViewById(R.id.userName);
         tvUserName.setText(userName);
-        CircularImageView ava = (CircularImageView) header.findViewById(R.id.avatar);
+        CircularImageView ava = (CircularImageView) header.findViewById(R.id.card_avatar);
      //   Picasso.with(this)
          //       .load(userAvatar)
            //     .into(ava);

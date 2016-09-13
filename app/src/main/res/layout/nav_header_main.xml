@@ -15,7 +15,7 @@
     <com.pkmmte.view.CircularImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/avatar"
+        android:id="@+id/card_avatar"
         android:src="@drawable/ic_account_circle"
         android:layout_gravity="center_vertical"
         app:border="true"

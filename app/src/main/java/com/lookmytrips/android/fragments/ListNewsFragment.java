@@ -22,6 +22,7 @@ import com.lookmytrips.android.R;
 import com.lookmytrips.android.activity.DetailActivity;
 import com.lookmytrips.android.adapters.PostAdapter;
 import com.lookmytrips.android.helper.Constants;
+import com.lookmytrips.android.model.User;
 import com.lookmytrips.android.utils.Utils;
 import com.lookmytrips.android.utils.AppController;
 import com.lookmytrips.android.utils.SpaceItemDecoration;
@@ -47,6 +48,8 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     private ArrayList<Post> posts = new ArrayList<>();
     private PostAdapter mPostAdapter;
     private Post post;
+    private ArrayList<User> users = new ArrayList<>();
+
 
     private ProgressDialog mDialog;
 
@@ -66,21 +69,21 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        title = getArguments().getString("title");
-//        url = getArguments().getString("url");
+        category = getArguments().getString("url");
     }
 
-    private void getFeed() {
+    private void getFeed(String category_url) {
 
         //    if (AppStatus.getInstance(getActivity()).isOnline(getActivity())) {
         progressBar.setVisibility(View.VISIBLE);
-        String category_url = "http://www.lookmytrips.com/api/rating/interesting/?last=0";
+        category_url = category;
 
         JsonObjectRequest eventsRequest = new JsonObjectRequest(Request.Method.GET,
                 category_url, (JSONObject) null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 progressBar.setVisibility(View.GONE);
-                post = new Post();
+
                 try {
                     JSONObject obj = response.getJSONObject("items");
 
@@ -97,58 +100,42 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String rating = jsonObject.getString("Rating");
                         String comments = jsonObject.getString("Comments");
 
-//
-//                        JSONObject images = jsonObject.getJSONObject("Images");
-//                        String image = images.getString("image");
-//                        String thumb = images.getString("thumb");
-//                        String big = images.getString("big");
-//
-//                        JSONObject geoHr = jsonObject.getJSONObject("GeoHr");
-//                        String country = geoHr.getString("country");
-//                        String city = geoHr.getString("city");
-//                        String state = geoHr.getString("state");
-//                        String street = geoHr.getString("street");
+                        JSONObject images = jsonObject.getJSONObject("Images");
+                        String image = images.getString("image");
+                        String thumb = images.getString("thumb");
+                        String big = images.getString("big");
 
+                        JSONObject geoHr = jsonObject.getJSONObject("GeoHr");
+                        String country = geoHr.getString("country");
+                        String city = geoHr.getString("city");
+                        String state = geoHr.getString("state");
+                        String street = geoHr.getString("street");
 
+                        post = new Post();
                         post.setId(id);
                         post.setLikes(likes);
                         post.setOwner(owner);
-//                        post.setImage(image);
-//                        post.setBig(big);
-//                        post.setThumb(thumb);
+                        post.setImage(image);
+                        post.setBig(big);
+                        post.setThumb(thumb);
                         post.setTitle(title);
                         post.setWasHere(wasHere);
                         post.setShares(shares);
                         post.setRating(rating);
                         post.setComments(comments);
-//                        post.setGeoHrCity(country);
-//                        post.setGeoHrCity(city);
-//                        post.setGeoHrState(state);
-//                        post.setGeoHrStreet(street);
+                        post.setGeoHrCountry(country);
+                        post.setGeoHrCity(city);
+                        post.setGeoHrState(state);
+                        post.setGeoHrStreet(street);
 
                         posts.add(post);
-                   //     mPostAdapter.addPost(post);
 
                     }
-//
-//                    JSONArray userArray = obj.getJSONArray("users");
-//
-//                    for (int i = 0; i < userArray.length(); i++) {
-//                        JSONObject jsonUser = userArray.getJSONObject(i);
-//                        String id = jsonUser.getString("id");
-//                        String avatar = jsonUser.getString("Avatar");
-//                        String anguage = jsonUser.getString("Language");
-//                        String name = jsonUser.getString("Name");
-//                        String role = jsonUser.getString("Role");
-//
-//                        post.setAvatar(avatar);
-//                        post.setUserName(name);
-//
-//                    }
 
-             //
 
-                 //   mAdapter.notifyDataSetChanged();
+
+
+                    mPostAdapter.notifyDataSetChanged();
                     } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
@@ -159,8 +146,37 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 //                    SaveIntoDatabase task = new SaveIntoDatabase();
 //                    task.execute(flower);
 
+                    try {
+
+                        JSONObject obj = response.getJSONObject("items");
+
+                        JSONArray feedArray = obj.getJSONArray("feed");
+
+                        JSONObject userObj = obj.getJSONObject("users");
+
+                    for (int j = 0; j < userObj.length(); j++) {
+                        JSONObject detailedUserObj = userObj.getJSONObject(post.getOwner());
+
+                 //       String userid = detailedUserObj.getString(post.getOwner());
+                        String avatar = detailedUserObj.getString("Avatar");
+                        String anguage = detailedUserObj.getString("Language");
+                        String name = detailedUserObj.getString("Name");
+                        String role = detailedUserObj.getString("Role");
+
+                        post.setAvatar(avatar);
+                        post.setUserName(name);
+                    }
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+
+
+
+
+
                     mPostAdapter.addPost(post);
                 }
+              //  mPostAdapter.notifyDataSetChanged();
                 mDialog.dismiss();
 
             }
@@ -196,7 +212,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 
         mRecyclerView.setAdapter(mPostAdapter);
 
-        getFeed();
+     //   getFeed(category);
 
 //        mRecyclerView.addOnItemTouchListener(
 //                new RecyclerClick(getActivity(), new RecyclerClick.OnItemClickListener() {
@@ -271,7 +287,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
         mDialog.show();
 
    //     if (getNetworkAvailability()) {
-            getFeed();
+            getFeed(category);
    //     } else {
       //      getFeedFromDatabase();
      //   }

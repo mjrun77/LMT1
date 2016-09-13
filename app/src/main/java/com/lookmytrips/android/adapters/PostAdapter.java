@@ -19,15 +19,8 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
 
-    Context context;
     private List<Post> posts;
     PostClickListener mListener;
-
-//    public PostAdapter(PostClickListener listener, ArrayList<Post> posts){
-//        this.context = context;
-//        this.posts = posts;
-//        mListener = listener;
-//    }
 
     public PostAdapter(PostClickListener clickListener){
         posts = new ArrayList<>();
@@ -50,24 +43,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
         holder.mTvComments.setText(currPost.getComments());
         holder.mTvFavorities.setText("soon");
         holder.mTvShares.setText(currPost.getShares());
-    //    holder.mPlace.setText(country + ", " + city);
+        holder.mPlace.setText(currPost.getGeoHrCountry() + ", " + currPost.getGeoHrCity());
         holder.mTvComments.setText(currPost.getComments());
+        holder.mTvUserName.setText(currPost.getUserName());
 
-    //    Object staff = currPost.getImages().toString();
-     //    Object mapa =  currPost.images;
+        Picasso.with(holder.itemView.getContext()).load(currPost.getThumb()).into(holder.mImage);
 
+        String avatar;
+        avatar = currPost.getAvatar();
 
-        String m = "http://img.lookmytrips.com/images/look4qod/thumb-579f4caaff93677b4d0112b5-57a0d644d1d25-1bq1li5.jpg";
+        if (currPost.getAvatar().equals("null")){
+            avatar ="http://img.lookmytrips.com/images/look62lj/57017057ff936741ad022f85-1bg2s2n.jpg";
+        }
 
-
-  //      Type listType = new TypeToken<ArrayList<MainFeed.Feed>>(){}.getType();
-
-//        List<MainFeed.Feed> yourClassList = new Gson().fromJson(String.valueOf(currPost.images), listType);
-
-        Log.i("fffffffffff", m);
-
-        Picasso.with(holder.itemView.getContext()).load(m).into(holder.mImage);
-
+        Picasso.with(holder.itemView.getContext()).load(avatar).into(holder.mAvatar);
 
     }
 
@@ -92,8 +81,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mTitle, mTvLikes, mPlace, mTvComments, mTvFavorities, mTvShares;
-        private ImageView mImage;
+        private TextView mTitle, mTvLikes, mPlace, mTvComments, mTvFavorities, mTvShares, mTvUserName;
+        private ImageView mImage, mAvatar;
 
         public Holder(View itemView) {
             super(itemView);
@@ -105,6 +94,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
             mTvComments = (TextView) itemView.findViewById(R.id.tv_card_comments_count);
             mTvShares = (TextView) itemView.findViewById(R.id.tv_card_share_count);
             mImage = (ImageView) itemView.findViewById(R.id.bg_image);
+            mAvatar = (ImageView) itemView.findViewById(R.id.card_avatar);
+            mTvUserName = (TextView) itemView.findViewById(R.id.card_user_name);
             itemView.setOnClickListener(this);
         }
 
