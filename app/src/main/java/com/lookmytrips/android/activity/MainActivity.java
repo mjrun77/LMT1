@@ -1,6 +1,5 @@
 package com.lookmytrips.android.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,22 +28,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.lookmytrips.android.R;
-import com.lookmytrips.android.adapters.ViewPagerAdapter;
 import com.lookmytrips.android.fragments.ListNewsFragment;
 import com.lookmytrips.android.utils.Constants;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.pkmmte.view.CircularImageView;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -176,15 +169,15 @@ public class MainActivity extends AppCompatActivity
             public Fragment getItem(int position) {
                 switch (position % 3) {
                     case 0:
-                        return ListNewsFragment.newInstance();
+                        return ListNewsFragment.newInstance(c.getFeed_popular());
                     case 1:
-                        return ListNewsFragment.newInstance();
+                        return ListNewsFragment.newInstance(c.getFeed_interesting());
 
                     case 2:
-                        return ListNewsFragment.newInstance();
+                        return ListNewsFragment.newInstance(c.getFeed_new());
 
                     default:
-                        return ListNewsFragment.newInstance();
+                        return ListNewsFragment.newInstance(c.getFeed_interesting());
                 }
             }
 

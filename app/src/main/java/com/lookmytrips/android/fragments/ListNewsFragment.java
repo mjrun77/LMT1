@@ -1,26 +1,28 @@
 package com.lookmytrips.android.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.lookmytrips.android.R;
+import com.lookmytrips.android.activity.DetailActivity;
 import com.lookmytrips.android.adapters.PostAdapter;
+import com.lookmytrips.android.helper.Constants;
+import com.lookmytrips.android.utils.Utils;
 import com.lookmytrips.android.utils.AppController;
 import com.lookmytrips.android.utils.SpaceItemDecoration;
 
@@ -29,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.vk.sdk.VKUIHelper.getApplicationContext;
 
 public class ListNewsFragment extends Fragment implements PostAdapter.PostClickListener{
 
@@ -39,21 +43,22 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     ProgressBar progressBar;
     private String category;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+  //  private RecyclerView.Adapter mAdapter;
     private ArrayList<Post> posts = new ArrayList<>();
     private PostAdapter mPostAdapter;
     private Post post;
 
+    private ProgressDialog mDialog;
+
     public ListNewsFragment() {
     }
 
-    public static Fragment newInstance() {
+    public static Fragment newInstance(String url) {
 
         ListNewsFragment myFragment = new ListNewsFragment();
-//        Bundle args = new Bundle();
-//        args.putString("title", title);
-//        args.putString("url", url);
-//        myFragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putString("url", url);
+        myFragment.setArguments(args);
         return myFragment;
     }
 
@@ -64,7 +69,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 //        url = getArguments().getString("url");
     }
 
-    private void loadNews() {
+    private void getFeed() {
 
         //    if (AppStatus.getInstance(getActivity()).isOnline(getActivity())) {
         progressBar.setVisibility(View.VISIBLE);
@@ -92,61 +97,71 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String rating = jsonObject.getString("Rating");
                         String comments = jsonObject.getString("Comments");
 
-                        JSONObject images = jsonObject.getJSONObject("Images");
-                        String image = images.getString("image");
-                        String thumb = images.getString("thumb");
-                        String big = images.getString("big");
-
-                        JSONObject geoHr = jsonObject.getJSONObject("GeoHr");
-                        String country = geoHr.getString("country");
-                        String city = geoHr.getString("city");
-                        String state = geoHr.getString("state");
-                        String street = geoHr.getString("street");
+//
+//                        JSONObject images = jsonObject.getJSONObject("Images");
+//                        String image = images.getString("image");
+//                        String thumb = images.getString("thumb");
+//                        String big = images.getString("big");
+//
+//                        JSONObject geoHr = jsonObject.getJSONObject("GeoHr");
+//                        String country = geoHr.getString("country");
+//                        String city = geoHr.getString("city");
+//                        String state = geoHr.getString("state");
+//                        String street = geoHr.getString("street");
 
 
                         post.setId(id);
                         post.setLikes(likes);
                         post.setOwner(owner);
-                        post.setImage(image);
-                        post.setBig(big);
+//                        post.setImage(image);
+//                        post.setBig(big);
+//                        post.setThumb(thumb);
                         post.setTitle(title);
                         post.setWasHere(wasHere);
                         post.setShares(shares);
                         post.setRating(rating);
                         post.setComments(comments);
-                        post.setThumb(thumb);
-                        post.setGeoHrCity(country);
-                        post.setGeoHrCity(city);
-                        post.setGeoHrState(state);
-                        post.setGeoHrStreet(street);
+//                        post.setGeoHrCity(country);
+//                        post.setGeoHrCity(city);
+//                        post.setGeoHrState(state);
+//                        post.setGeoHrStreet(street);
 
                         posts.add(post);
-
-
-                    }
-
-                    JSONArray userArray = obj.getJSONArray("users");
-
-                    for (int i = 0; i < userArray.length(); i++) {
-                        JSONObject jsonUser = userArray.getJSONObject(i);
-                        String id = jsonUser.getString("id");
-                        String avatar = jsonUser.getString("Avatar");
-                        String anguage = jsonUser.getString("Language");
-                        String name = jsonUser.getString("Name");
-                        String role = jsonUser.getString("Role");
-
-                        post.setAvatar(avatar);
-                        post.setUserName(name);
+                   //     mPostAdapter.addPost(post);
 
                     }
+//
+//                    JSONArray userArray = obj.getJSONArray("users");
+//
+//                    for (int i = 0; i < userArray.length(); i++) {
+//                        JSONObject jsonUser = userArray.getJSONObject(i);
+//                        String id = jsonUser.getString("id");
+//                        String avatar = jsonUser.getString("Avatar");
+//                        String anguage = jsonUser.getString("Language");
+//                        String name = jsonUser.getString("Name");
+//                        String role = jsonUser.getString("Role");
+//
+//                        post.setAvatar(avatar);
+//                        post.setUserName(name);
+//
+//                    }
 
+             //
 
-                    mPostAdapter.notifyDataSetChanged();
+                 //   mAdapter.notifyDataSetChanged();
                     } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
 
+                for (int i = 0; i < posts.size(); i++) {
+                    Post post = posts.get(i);
 
+//                    SaveIntoDatabase task = new SaveIntoDatabase();
+//                    task.execute(flower);
+
+                    mPostAdapter.addPost(post);
+                }
+                mDialog.dismiss();
 
             }
         }, new Response.ErrorListener() {
@@ -176,13 +191,12 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
         progressBar = (ProgressBar) v.findViewById(R.id.progressBar_news);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
         posts = new ArrayList();
-        mPostAdapter = new PostAdapter(getActivity(), this);
-        mAdapter = mPostAdapter;
-        mRecyclerView.setAdapter(mAdapter);
+       // mAdapter = new PostAdapter(this, posts);
+        mPostAdapter = new PostAdapter(this);
 
+        mRecyclerView.setAdapter(mPostAdapter);
 
-
-        loadNews();
+        getFeed();
 
 //        mRecyclerView.addOnItemTouchListener(
 //                new RecyclerClick(getActivity(), new RecyclerClick.OnItemClickListener() {
@@ -226,7 +240,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 //
 //                    l++;
 //                    category = category + "&page=" + l;
-//                    loadNews(category);
+//                    getFeed(category);
 //                    mAdapter.notifyDataSetChanged();
 //                }
             }
@@ -235,6 +249,36 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
         //   MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        loadFeed();
+
+    }
+
+    private void loadFeed() {
+
+        mDialog = new ProgressDialog(getActivity());
+        mDialog.setMessage("Loading Flower Data...");
+        mDialog.setCancelable(true);
+        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mDialog.setIndeterminate(true);
+
+        mPostAdapter.reset();
+
+        mDialog.show();
+
+   //     if (getNetworkAvailability()) {
+            getFeed();
+   //     } else {
+      //      getFeedFromDatabase();
+     //   }
+    }
+
+    public boolean getNetworkAvailability() {
+        return Utils.isNetworkAvailable(getApplicationContext());
     }
 
     public void onSaveInstanceState(Bundle bundle) {
@@ -268,10 +312,9 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 
     @Override
     public void onClick(int position) {
-
-        //  MainFeed.Feed selectedPost = mPostAdapter.getSelectedPost(position);
-        //  Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        //  intent.putExtra("posts", selectedPost);
-        //  startActivity(intent);
+        Post selectedPost = mPostAdapter.getSelectedPost(position);
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(Constants.REFERENCE.POST, selectedPost);
+        startActivity(intent);
     }
 }

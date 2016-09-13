@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.lookmytrips.android.controller.FeedFetchListener;
 import com.lookmytrips.android.helper.Constants;
-import com.lookmytrips.android.helper.Utils;
+import com.lookmytrips.android.utils.Utils;
 import com.lookmytrips.android.pojo.Feed;
 
 import java.util.ArrayList;

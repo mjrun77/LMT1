@@ -42,6 +42,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activity.AddPhotoActivity"></activity>
+        <activity android:name=".activity.DetailActivity"></activity>
     </application>
 
 </manifest>

@@ -49,11 +49,11 @@ public class Constants {
     }
 
     public static final class REFERENCE {
-        public static final String FLOWER = Config.PACKAGE_NAME + "flower";
+        public static final String POST = Config.PACKAGE_NAME + "post";
     }
 
     public static final class Config {
-        public static final String PACKAGE_NAME = "com.mdcure.lmt.";
+        public static final String PACKAGE_NAME = "com.lookmytrips.android.";
     }
 
 

@@ -7,10 +7,20 @@ package com.lookmytrips.android.utils;
 public class Constants {
 
 
-    private String category_interesting = "http://www.lookmytrips.com/api/rating/interesting/?last=0";
+    private String feed_interesting = "http://www.lookmytrips.com/api/rating/interesting/?last=0";
+    private String feed_popular = "http://www.lookmytrips.com/api/rating/popular/?last=0";
+    private String feed_new = "http://www.lookmytrips.com/api/media/feed/?last=&media=";
 
-    public String getCategory_interesting() {
-        return category_interesting;
+    public String getFeed_popular() {
+        return feed_popular;
+    }
+
+    public String getFeed_new() {
+        return feed_new;
+    }
+
+    public String getFeed_interesting() {
+        return feed_interesting;
     }
 
     public static final String IS_LOGGED_IN = "isLoggedIn";

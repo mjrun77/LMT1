@@ -10,29 +10,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.reflect.TypeToken;
 import com.lookmytrips.android.R;
 import com.lookmytrips.android.fragments.Post;
-import com.lookmytrips.android.model.MainFeed;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
 
     Context context;
-    private List<Post> mPosts;
-    private List <MainFeed.Users> users;
+    private List<Post> posts;
     PostClickListener mListener;
-    private LinkedTreeMap <String, String> mapa;
 
-    public PostAdapter(Context  context, PostClickListener listener){
-        this.context = context;
-        mPosts = new ArrayList<>();
-        mListener = listener;
+//    public PostAdapter(PostClickListener listener, ArrayList<Post> posts){
+//        this.context = context;
+//        this.posts = posts;
+//        mListener = listener;
+//    }
+
+    public PostAdapter(PostClickListener clickListener){
+        posts = new ArrayList<>();
+        this.mListener = clickListener;
     }
 
     @Override
@@ -45,38 +44,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        Post currPost = mPosts.get(position);
-     //   MainFeed.Feed.Images images = mPosts.get(position) ;
-
-      //  users = users.get(position);
-
-
-
-
-
-//
-//        if (city.equals("null")){
-//            city = "";
-//        }
-//
-//        if (country.equals("null")){
-//            country = "";
-//        }
-
-
-//        Post currPost = mPosts.get(position);
-//        holder.mTitle.setText(currPost.getTitle());
-//
-//        holder.mTitle.setText(currPost.getTitle());
-//        holder.mTvLikes.setText(currPost.getLikes());
-//        holder.mTvComments.setText(currPost.getComments());
-//        holder.mTvFavorities.setText("soon");
-//        holder.mTvShares.setText(currPost.getShares());
-//        holder.mPlace.setText(currPost.getGeoHrCountry() + ", " + currPost.getGeoHrCity());
-//        holder.mTvComments.setText(currPost.getComments());
-//
-//        Picasso.with(context).load(currPost.getThumb()).into(holder.mImage);
-
+        Post currPost = posts.get(position);
         holder.mTitle.setText(currPost.getTitle());
         holder.mTvLikes.setText(currPost.getLikes());
         holder.mTvComments.setText(currPost.getComments());
@@ -92,38 +60,34 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
         String m = "http://img.lookmytrips.com/images/look4qod/thumb-579f4caaff93677b4d0112b5-57a0d644d1d25-1bq1li5.jpg";
 
 
-        Type listType = new TypeToken<ArrayList<MainFeed.Feed>>(){}.getType();
+  //      Type listType = new TypeToken<ArrayList<MainFeed.Feed>>(){}.getType();
 
 //        List<MainFeed.Feed> yourClassList = new Gson().fromJson(String.valueOf(currPost.images), listType);
 
         Log.i("fffffffffff", m);
 
-     //    m = currPost.getCover().toString();
-
-    //  m =  currPost.cover.;
-
-
-
-
-     //   String m = currPost.cover.toString();
-
-        Picasso.with(context).load(m).into(holder.mImage);
+        Picasso.with(holder.itemView.getContext()).load(m).into(holder.mImage);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return mPosts.size();
+        return posts.size();
     }
 
     public void addPost(Post post){
-        mPosts.add(post);
+        posts.add(post);
         notifyDataSetChanged();
     }
 
     public Post getSelectedPost(int position) {
-        return mPosts.get(position);
+        return posts.get(position);
+    }
+
+    public void reset() {
+        posts.clear();
+        notifyDataSetChanged();
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -141,7 +105,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
             mTvComments = (TextView) itemView.findViewById(R.id.tv_card_comments_count);
             mTvShares = (TextView) itemView.findViewById(R.id.tv_card_share_count);
             mImage = (ImageView) itemView.findViewById(R.id.bg_image);
-      itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
