@@ -19,7 +19,7 @@ public class Post implements Serializable{
     private String title;
     private String wasHere;
     private String shares;
-    private String rating;
+    private int rating;
     private String geoHrCountry;
     private String geoHrCity;
     private String geoHrState;
@@ -133,11 +133,11 @@ public class Post implements Serializable{
         this.shares = shares;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

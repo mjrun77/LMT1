@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Win on 14.09.2016.
  */
 
-public class Geo implements Serializable {
+public class Geo implements Serializable{
 
     private String lat;
     private String lon;

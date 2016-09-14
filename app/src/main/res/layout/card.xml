@@ -10,7 +10,7 @@
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="495dp"
         android:elevation="6dp"
         app:cardCornerRadius="6dp">
 
@@ -27,15 +27,25 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/cardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginTop="20dp"
-                    android:textSize="18sp"
-                    android:text="Зал Инчжончжон"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <TextView
+                        android:id="@+id/cardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentBottom="true"
+                        android:paddingBottom="5dp"
+                        android:textSize="18sp"
+                        android:text="Зал Инчжончжон"/>
+
+                </RelativeLayout>
+
+
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -54,7 +64,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/bottom_grey"
-                    android:layout_marginBottom="8dp"
                     android:layout_toRightOf="@+id/card_metka"
                     android:paddingLeft="2dp"
                     android:textSize="14sp"

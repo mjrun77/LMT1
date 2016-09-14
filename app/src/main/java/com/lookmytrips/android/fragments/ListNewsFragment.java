@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,39 +103,14 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String id = jsonObject.getString("_id");
                         String owner = jsonObject.getString("Owner");
                         String likes = jsonObject.getString("Likes");
-                        String title = jsonObject.getString("Title");
+                        String htmlTitle = jsonObject.getString("Title");
+                        String title = Html.fromHtml(htmlTitle).toString();
+
+
                         String wasHere = jsonObject.getString("WasHere");
                         String shares = jsonObject.getString("Shares");
-                        String rating = jsonObject.getString("Rating");
+                        int rating = jsonObject.getInt("Rating");
                         String comments = jsonObject.getString("Comments");
-
-                        JSONArray placesArray = jsonObject.getJSONArray("Places");
-                        for (int j = 0; j < placesArray.length(); j++) {
-
-                            JSONObject jsonPlObject = placesArray.getJSONObject(i);
-                            String placesType = jsonPlObject.getString("type");
-                            String placesName = jsonPlObject.getString("name");
-
-
-                            places.add(new Places(placesType, placesName));
-
-
-                        }
-
-
-                        JSONArray geoArray = jsonObject.getJSONArray("Geo");
-                        for (int j = 0; j < geoArray.length(); j++) {
-                            String lat = geoArray.get(0).toString();
-                            String lon = geoArray.get(1).toString();
-                            geos.add(new Geo(lat, lon));
-                        }
-
-
-                        JSONArray catArray = jsonObject.getJSONArray("Cat");
-                        for (int j = 0; j < catArray.length(); j++) {
-                            String catTitle = catArray.get(j).toString();
-                            cats.add(new Cat(catTitle));
-                        }
 
                         JSONObject images = jsonObject.getJSONObject("Images");
                         String image = images.getString("image");
@@ -146,7 +122,6 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String city = geoHr.getString("city");
                         String state = geoHr.getString("state");
                         String street = geoHr.getString("street");
-
 
                         post.setId(id);
                         post.setLikes(likes);
@@ -164,16 +139,39 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         post.setGeoHrState(state);
                         post.setGeoHrStreet(street);
 
+
+                        JSONArray placesArray = jsonObject.getJSONArray("Places");
+                        for (int p = 0; p < placesArray.length(); p++) {
+
+                            JSONObject jsonPlObject = placesArray.getJSONObject(p);
+                            String placesType = jsonPlObject.getString("type");
+                            String placesName = jsonPlObject.getString("name");
+
+                            places.add(new Places(placesType, placesName));
+
+                        }
+
+                        JSONArray geoArray = jsonObject.getJSONArray("Geo");
+                        for (int j = 0; j < geoArray.length(); j++) {
+                            String lat = geoArray.get(0).toString();
+                            String lon = geoArray.get(1).toString();
+                            geos.add(new Geo(lat, lon));
+                        }
+//
+//
+                        JSONArray catArray = jsonObject.getJSONArray("Cat");
+                        for (int c = 0; c < catArray.length(); c++) {
+                            String catTitle = catArray.get(c).toString();
+                            cats.add(new Cat(catTitle));
+                        }
+
                         post.setPlacesList(places);
                         post.setGeoList(geos);
                         post.setCatList(cats);
+
                         posts.add(post);
 
                     }
-
-
-
-
                     mPostAdapter.notifyDataSetChanged();
                     } catch (JSONException e1) {
                     e1.printStackTrace();

@@ -46,6 +46,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import at.grabner.circleprogress.CircleProgressView;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     private String userAvatar;
     private String userName;
     private TextView tvUserName;
+    private CircleProgressView mCircleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,15 +86,6 @@ public class MainActivity extends AppCompatActivity
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-//        a = (ImageButton)findViewById(R.id.a);
-//        a.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                selectImage();
-//
-//            }
-//        });
 
         FloatingActionButton actionC = (FloatingActionButton) findViewById(R.id.add_photo);
         actionC.setOnClickListener(new View.OnClickListener() {
@@ -156,12 +150,14 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+
     private void setupViewPager(ViewPager viewPager) {
      //   ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 //        adapter.addFrag(new FeedPopularFragment(), getResources().getString(R.string.feedPopularFragment));
 //        adapter.addFrag(new FeedInterestingFragment(), getResources().getString(R.string.feedInterestingFragment));
 //        adapter.addFrag(new FeedNewFragment(), getResources().getString(R.string.feedNewFragment));
         //viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             Constants c = new Constants();
 
@@ -188,7 +184,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public CharSequence getPageTitle(int position) {
-                switch (position % 4) {
+                switch (position % 3) {
                     case 0:
                         return getResources().getString(R.string.feedPopularFragment);
                     case 1:

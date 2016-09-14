@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.lookmytrips.android.R;
 import com.lookmytrips.android.fragments.Post;
 import com.pkmmte.view.CircularImageView;
@@ -23,6 +22,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
+import at.grabner.circleprogress.CircleProgressView;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
 
@@ -53,41 +54,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
         holder.mPlace.setText(currPost.getGeoHrCountry() + ", " + currPost.getGeoHrCity());
         holder.mTvComments.setText(currPost.getComments());
         holder.mTvUserName.setText(currPost.getUserName());
+        holder.mCircleView.setValue(currPost.getRating());
 
-
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-        Bitmap bitmap=null;
-        File f= new File(path);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        try {
-            bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        holder.mAvatar.setImageBitmap(bitmap);
-
-
-        Glide
-                .with(holder.itemView.getContext())
-                .load(currPost.getThumb())
-                .centerCrop()
-            //    .placeholder(R.drawable.)
-                .crossFade()
-                .into(holder.mImage);
-
-        Glide
-                .with(holder.itemView.getContext())
-                .load(currPost.getAvatar())
-                .centerCrop()
-                //    .placeholder(R.drawable.)
-                .crossFade()
-                .into(holder.mAvatar);
-
-//        Picasso.with(holder.itemView.getContext()).load(currPost.getThumb()).into(holder.mImage);
-//        Picasso.with(holder.itemView.getContext()).load(new File(currPost.getAvatar())).error(R.drawable.ic_account_circle).placeholder(R.drawable.ic_account_circle).into(holder.mAvatar);
-
+        Picasso.with(holder.itemView.getContext()).load(currPost.getThumb()).into(holder.mImage);
+        Picasso.with(holder.itemView.getContext()).load(currPost.getAvatar()).error(R.drawable.ic_account_circle).noFade().placeholder(R.drawable.ic_account_circle).into(holder.mAvatar);
     }
 
     @Override
@@ -114,9 +84,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
         private TextView mTitle, mTvLikes, mPlace, mTvComments, mTvFavorities, mTvShares, mTvUserName;
         private ImageView mImage;
         private CircularImageView mAvatar;
+        private CircleProgressView mCircleView;
 
         public Holder(View itemView) {
             super(itemView);
+
+            mCircleView = (CircleProgressView) itemView.findViewById(R.id.circleView);
+            //   mCircleView.setSeekModeEnabled(true);
+            mCircleView.setMaxValue(100);
+            //    mCircleView.setValue(44);
+            mCircleView.setBarWidth(10);
+            mCircleView.setRimWidth(10);
+            mCircleView.setRimColor(itemView.getContext().getResources().getColor(R.color.light_grey));
+            mCircleView.setContourColor(itemView.getContext().getResources().getColor(R.color.light_grey));
+            mCircleView.setBarColor(itemView.getContext().getResources().getColor(R.color.green));
+            mCircleView.setUnitVisible(true);
+            mCircleView.setUnit("%");
+//        mCircleView.setUnitColor();
+               mCircleView.setValueAnimated(24);
+
+//                mCircleView.setTextSize(90); // text size set, auto text size off
+//        mCircleView.setUnitSize(90); // if i set the text size i also have to set the unit size
+            mCircleView.setAutoTextSize(true); // enable auto text size, previous values are overwritten
+            //if you want the calculated text sizes to be bigger/smaller you can do so via
+//        mCircleView.setUnitScale(0.9f);
+//        mCircleView.setTextScale(0.9f);
 
             mTitle = (TextView) itemView.findViewById(R.id.cardTitle);
             mPlace = (TextView) itemView.findViewById(R.id.tv_card_place);
