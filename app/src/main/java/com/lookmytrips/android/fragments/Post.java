@@ -1,6 +1,12 @@
 package com.lookmytrips.android.fragments;
 
+import com.lookmytrips.android.model.MainFeed;
+import com.lookmytrips.android.pojo.Cat;
+import com.lookmytrips.android.pojo.Geo;
+import com.lookmytrips.android.pojo.Places;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Win on 12.09.2016.
@@ -26,6 +32,34 @@ public class Post implements Serializable{
 
     private String avatar;
     private String userName;
+
+    private ArrayList<Places> placesList;
+    private ArrayList<Geo> geoList;
+    private ArrayList<Cat> catList;
+
+    public ArrayList<Places> getPlacesList() {
+        return placesList;
+    }
+
+    public ArrayList<Geo> getGeoList() {
+        return geoList;
+    }
+
+    public void setGeoList(ArrayList<Geo> geoList) {
+        this.geoList = geoList;
+    }
+
+    public ArrayList<Cat> getCatList() {
+        return catList;
+    }
+
+    public void setCatList(ArrayList<Cat> catList) {
+        this.catList = catList;
+    }
+
+    public void setPlacesList(ArrayList<Places> placesList) {
+        this.placesList = placesList;
+    }
 
     public String getAvatar() {
         return avatar;

@@ -23,6 +23,9 @@ import com.lookmytrips.android.activity.DetailActivity;
 import com.lookmytrips.android.adapters.PostAdapter;
 import com.lookmytrips.android.helper.Constants;
 import com.lookmytrips.android.model.User;
+import com.lookmytrips.android.pojo.Cat;
+import com.lookmytrips.android.pojo.Geo;
+import com.lookmytrips.android.pojo.Places;
 import com.lookmytrips.android.utils.Utils;
 import com.lookmytrips.android.utils.AppController;
 import com.lookmytrips.android.utils.SpaceItemDecoration;
@@ -90,6 +93,11 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                     JSONArray feedArray = obj.getJSONArray("feed");
 
                     for (int i = 0; i < feedArray.length(); i++) {
+                        post = new Post();
+                        ArrayList<Places> places = new ArrayList<Places>();
+                        ArrayList<Geo> geos = new ArrayList<Geo>();
+                        ArrayList<Cat> cats = new ArrayList<Cat>();
+
                         JSONObject jsonObject = feedArray.getJSONObject(i);
                         String id = jsonObject.getString("_id");
                         String owner = jsonObject.getString("Owner");
@@ -99,6 +107,34 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String shares = jsonObject.getString("Shares");
                         String rating = jsonObject.getString("Rating");
                         String comments = jsonObject.getString("Comments");
+
+                        JSONArray placesArray = jsonObject.getJSONArray("Places");
+                        for (int j = 0; j < placesArray.length(); j++) {
+
+                            JSONObject jsonPlObject = placesArray.getJSONObject(i);
+                            String placesType = jsonPlObject.getString("type");
+                            String placesName = jsonPlObject.getString("name");
+
+
+                            places.add(new Places(placesType, placesName));
+
+
+                        }
+
+
+                        JSONArray geoArray = jsonObject.getJSONArray("Geo");
+                        for (int j = 0; j < geoArray.length(); j++) {
+                            String lat = geoArray.get(0).toString();
+                            String lon = geoArray.get(1).toString();
+                            geos.add(new Geo(lat, lon));
+                        }
+
+
+                        JSONArray catArray = jsonObject.getJSONArray("Cat");
+                        for (int j = 0; j < catArray.length(); j++) {
+                            String catTitle = catArray.get(j).toString();
+                            cats.add(new Cat(catTitle));
+                        }
 
                         JSONObject images = jsonObject.getJSONObject("Images");
                         String image = images.getString("image");
@@ -111,7 +147,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String state = geoHr.getString("state");
                         String street = geoHr.getString("street");
 
-                        post = new Post();
+
                         post.setId(id);
                         post.setLikes(likes);
                         post.setOwner(owner);
@@ -128,6 +164,9 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         post.setGeoHrState(state);
                         post.setGeoHrStreet(street);
 
+                        post.setPlacesList(places);
+                        post.setGeoList(geos);
+                        post.setCatList(cats);
                         posts.add(post);
 
                     }
@@ -157,11 +196,14 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                     for (int j = 0; j < userObj.length(); j++) {
                         JSONObject detailedUserObj = userObj.getJSONObject(post.getOwner());
 
-                 //       String userid = detailedUserObj.getString(post.getOwner());
                         String avatar = detailedUserObj.getString("Avatar");
                         String anguage = detailedUserObj.getString("Language");
                         String name = detailedUserObj.getString("Name");
                         String role = detailedUserObj.getString("Role");
+
+                        if (avatar.contains("null")){
+                            avatar ="http://img.lookmytrips.com/images/look62lj/57017057ff936741ad022f85-1bg2s2n.jpg";
+                        }
 
                         post.setAvatar(avatar);
                         post.setUserName(name);

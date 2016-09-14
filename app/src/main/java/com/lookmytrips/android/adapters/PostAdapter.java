@@ -1,6 +1,9 @@
 package com.lookmytrips.android.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+import com.bumptech.glide.Glide;
 import com.lookmytrips.android.R;
 import com.lookmytrips.android.fragments.Post;
+import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,16 +54,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
         holder.mTvComments.setText(currPost.getComments());
         holder.mTvUserName.setText(currPost.getUserName());
 
-        Picasso.with(holder.itemView.getContext()).load(currPost.getThumb()).into(holder.mImage);
 
-        String avatar;
-        avatar = currPost.getAvatar();
-
-        if (currPost.getAvatar().equals("null")){
-            avatar ="http://img.lookmytrips.com/images/look62lj/57017057ff936741ad022f85-1bg2s2n.jpg";
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+        Bitmap bitmap=null;
+        File f= new File(path);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        try {
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
-        Picasso.with(holder.itemView.getContext()).load(avatar).into(holder.mAvatar);
+        holder.mAvatar.setImageBitmap(bitmap);
+
+
+        Glide
+                .with(holder.itemView.getContext())
+                .load(currPost.getThumb())
+                .centerCrop()
+            //    .placeholder(R.drawable.)
+                .crossFade()
+                .into(holder.mImage);
+
+        Glide
+                .with(holder.itemView.getContext())
+                .load(currPost.getAvatar())
+                .centerCrop()
+                //    .placeholder(R.drawable.)
+                .crossFade()
+                .into(holder.mAvatar);
+
+//        Picasso.with(holder.itemView.getContext()).load(currPost.getThumb()).into(holder.mImage);
+//        Picasso.with(holder.itemView.getContext()).load(new File(currPost.getAvatar())).error(R.drawable.ic_account_circle).placeholder(R.drawable.ic_account_circle).into(holder.mAvatar);
 
     }
 
@@ -82,7 +112,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitle, mTvLikes, mPlace, mTvComments, mTvFavorities, mTvShares, mTvUserName;
-        private ImageView mImage, mAvatar;
+        private ImageView mImage;
+        private CircularImageView mAvatar;
 
         public Holder(View itemView) {
             super(itemView);
@@ -94,7 +125,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
             mTvComments = (TextView) itemView.findViewById(R.id.tv_card_comments_count);
             mTvShares = (TextView) itemView.findViewById(R.id.tv_card_share_count);
             mImage = (ImageView) itemView.findViewById(R.id.bg_image);
-            mAvatar = (ImageView) itemView.findViewById(R.id.card_avatar);
+            mAvatar = (CircularImageView) itemView.findViewById(R.id.card_avatar);
             mTvUserName = (TextView) itemView.findViewById(R.id.card_user_name);
             itemView.setOnClickListener(this);
         }

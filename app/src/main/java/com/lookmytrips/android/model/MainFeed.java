@@ -56,8 +56,8 @@ public class MainFeed {
 //        public HashMap<String, String> imageeees;
 
 
-        @SerializedName("Places")
-        private ArrayList<Places> places;
+//        @SerializedName("Places")
+//        private ArrayList<Places> places;
 
         @SerializedName("_id")
         private String _id;
@@ -74,13 +74,13 @@ public class MainFeed {
         @SerializedName("Geo")
         public Object geo;
 
-        public ArrayList<Places> getPlaces() {
-            return places;
-        }
-
-        public void setPlaces(ArrayList<Places> places) {
-            this.places = places;
-        }
+//        public ArrayList<Places> getPlaces() {
+//            return places;
+//        }
+//
+//        public void setPlaces(ArrayList<Places> places) {
+//            this.places = places;
+//        }
 
         public Object getCover() {
             return cover;
@@ -260,16 +260,8 @@ public class MainFeed {
 
     }
 
-    public class Geo implements Serializable{}
 
-    public class Places implements Serializable{
 
-        @SerializedName("type")
-        private String type;
-        @SerializedName("name")
-        private String name;
-
-    }
 
     public class Users implements Serializable {
         @SerializedName("Name")
