@@ -26,6 +26,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
@@ -50,9 +51,12 @@ dependencies {
     compile 'com.pkmmte.view:circularimageview:1.1'
     compile 'com.github.jakob-grabner:Circle-Progress-View:v1.2.9'
 
+    compile 'com.github.Aspsine:IRecyclerView:0.0.5'
+
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.mcxiaoke.volley:library:1.0.+'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.4'
 }

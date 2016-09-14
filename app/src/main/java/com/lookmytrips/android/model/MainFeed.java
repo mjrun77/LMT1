@@ -52,7 +52,7 @@ public class MainFeed {
 
         @SerializedName("GeoHr")
         GeoHr geoHr;
-//        @SerializedName("Images")
+//        @SerializedName("CardImages")
 //        public HashMap<String, String> imageeees;
 
 
@@ -68,7 +68,7 @@ public class MainFeed {
         @SerializedName("Cover")
         private Object cover;
 
-        @SerializedName("Images")
+        @SerializedName("CardImages")
         public Object images;
 
         @SerializedName("Geo")
@@ -233,30 +233,7 @@ public class MainFeed {
             return _id;
         }
 
-        public class Images implements Serializable{
 
-            @SerializedName("thumb")
-            private String thumbb;
-
-            @SerializedName("big")
-            private String bigg;
-
-            public String getThumbb() {
-                return thumbb;
-            }
-
-            public void setThumbb(String thumbb) {
-                this.thumbb = thumbb;
-            }
-
-            public String getBigg() {
-                return bigg;
-            }
-
-            public void setBigg(String bigg) {
-                this.bigg = bigg;
-            }
-        }
 
     }
 

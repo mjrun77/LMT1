@@ -7,8 +7,8 @@ package com.lookmytrips.android.utils;
 public class Constants {
 
 
-    private String feed_interesting = "http://www.lookmytrips.com/api/rating/interesting/?last=0";
-    private String feed_popular = "http://www.lookmytrips.com/api/rating/popular/?last=0";
+    private String feed_interesting = "http://www.lookmytrips.com/api/rating/interesting/?last=";
+    private String feed_popular = "http://www.lookmytrips.com/api/rating/popular/?last=";
     private String feed_new = "http://www.lookmytrips.com/api/media/feed/?last=&media=";
 
     public String getFeed_popular() {

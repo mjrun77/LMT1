@@ -1,6 +1,7 @@
 package com.lookmytrips.android.fragments;
 
 import com.lookmytrips.android.model.MainFeed;
+import com.lookmytrips.android.pojo.CardImages;
 import com.lookmytrips.android.pojo.Cat;
 import com.lookmytrips.android.pojo.Geo;
 import com.lookmytrips.android.pojo.Places;
@@ -25,6 +26,8 @@ public class Post implements Serializable{
     private String geoHrState;
     private String geoHrStreet;
     private String comments;
+    private String cover;
+    private String type;
 
     private String image;
     private String thumb;
@@ -36,6 +39,15 @@ public class Post implements Serializable{
     private ArrayList<Places> placesList;
     private ArrayList<Geo> geoList;
     private ArrayList<Cat> catList;
+    private ArrayList<CardImages> cardImages;
+
+    public ArrayList<CardImages> getCardImages() {
+        return cardImages;
+    }
+
+    public void setCardImages(ArrayList<CardImages> cardImages) {
+        this.cardImages = cardImages;
+    }
 
     public ArrayList<Places> getPlacesList() {
         return placesList;
@@ -61,6 +73,14 @@ public class Post implements Serializable{
         this.placesList = placesList;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -83,6 +103,14 @@ public class Post implements Serializable{
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public String getId() {

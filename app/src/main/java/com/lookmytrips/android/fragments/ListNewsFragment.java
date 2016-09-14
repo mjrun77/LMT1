@@ -1,12 +1,11 @@
 package com.lookmytrips.android.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -23,9 +22,10 @@ import com.lookmytrips.android.R;
 import com.lookmytrips.android.activity.DetailActivity;
 import com.lookmytrips.android.adapters.PostAdapter;
 import com.lookmytrips.android.helper.Constants;
-import com.lookmytrips.android.model.User;
+import com.lookmytrips.android.model.GeoHr;
 import com.lookmytrips.android.pojo.Cat;
 import com.lookmytrips.android.pojo.Geo;
+import com.lookmytrips.android.pojo.CardImages;
 import com.lookmytrips.android.pojo.Places;
 import com.lookmytrips.android.utils.Utils;
 import com.lookmytrips.android.utils.AppController;
@@ -37,6 +37,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 import static com.vk.sdk.VKUIHelper.getApplicationContext;
 
 public class ListNewsFragment extends Fragment implements PostAdapter.PostClickListener{
@@ -44,18 +47,13 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     int l = 1;
     LinearLayoutManager mLayoutManager;
     String title;
-    String url;
     ProgressBar progressBar;
     private String category;
     private RecyclerView mRecyclerView;
-  //  private RecyclerView.Adapter mAdapter;
     private ArrayList<Post> posts = new ArrayList<>();
     private PostAdapter mPostAdapter;
     private Post post;
-    private ArrayList<User> users = new ArrayList<>();
-
-
-    private ProgressDialog mDialog;
+    private SwipeRefreshLayout swipeContainer;
 
     public ListNewsFragment() {
     }
@@ -72,7 +70,6 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        title = getArguments().getString("title");
         category = getArguments().getString("url");
     }
 
@@ -90,7 +87,6 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 
                 try {
                     JSONObject obj = response.getJSONObject("items");
-
                     JSONArray feedArray = obj.getJSONArray("feed");
 
                     for (int i = 0; i < feedArray.length(); i++) {
@@ -106,39 +102,28 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String htmlTitle = jsonObject.getString("Title");
                         String title = Html.fromHtml(htmlTitle).toString();
 
-
                         String wasHere = jsonObject.getString("WasHere");
                         String shares = jsonObject.getString("Shares");
                         int rating = jsonObject.getInt("Rating");
                         String comments = jsonObject.getString("Comments");
 
-                        JSONObject images = jsonObject.getJSONObject("Images");
-                        String image = images.getString("image");
-                        String thumb = images.getString("thumb");
-                        String big = images.getString("big");
+                        String type = jsonObject.getString("Type");
+                        if (type.equals("image")){
+                            parseImage(jsonObject);
+                        } else if (type.equals("article")) {
+                            parseArticle(jsonObject);
 
-                        JSONObject geoHr = jsonObject.getJSONObject("GeoHr");
-                        String country = geoHr.getString("country");
-                        String city = geoHr.getString("city");
-                        String state = geoHr.getString("state");
-                        String street = geoHr.getString("street");
+                        }
 
                         post.setId(id);
                         post.setLikes(likes);
                         post.setOwner(owner);
-                        post.setImage(image);
-                        post.setBig(big);
-                        post.setThumb(thumb);
+
                         post.setTitle(title);
                         post.setWasHere(wasHere);
                         post.setShares(shares);
                         post.setRating(rating);
                         post.setComments(comments);
-                        post.setGeoHrCountry(country);
-                        post.setGeoHrCity(city);
-                        post.setGeoHrState(state);
-                        post.setGeoHrStreet(street);
-
 
                         JSONArray placesArray = jsonObject.getJSONArray("Places");
                         for (int p = 0; p < placesArray.length(); p++) {
@@ -173,7 +158,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 
                     }
                     mPostAdapter.notifyDataSetChanged();
-                    } catch (JSONException e1) {
+                } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
 
@@ -211,14 +196,8 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                     }
 
 
-
-
-
                     mPostAdapter.addPost(post);
                 }
-              //  mPostAdapter.notifyDataSetChanged();
-                mDialog.dismiss();
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -234,39 +213,48 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup conteiner, Bundle bundle) {
-//        category = getArguments().getString("url");
-//        title = getArguments().getString("title");
 
         View v = inflater.inflate(R.layout.fragment_recyclerview, conteiner, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.addItemDecoration(new SpaceItemDecoration(10));
 
+
+        //test animation
+        mRecyclerView.setItemAnimator(new ScaleInLeftAnimator());
+
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         progressBar = (ProgressBar) v.findViewById(R.id.progressBar_news);
-        progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
         posts = new ArrayList();
-       // mAdapter = new PostAdapter(this, posts);
         mPostAdapter = new PostAdapter(this);
 
         mRecyclerView.setAdapter(mPostAdapter);
 
-     //   getFeed(category);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
 
-//        mRecyclerView.addOnItemTouchListener(
-//                new RecyclerClick(getActivity(), new RecyclerClick.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(View view, int position) {
-//                        // TODO Handle item click
-//                        Post selectedFlower = postAdapter.getSelectedFlower(position - 1);
-//
-//                        Intent intent = new Intent(getActivity(), DetailsActivity.class);
-//                        intent.putExtra("POST_ITEM", selectedFlower);
-//                        getActivity().startActivity(intent);
-//                    }
-//                })
-//        );
+        // Setup refresh listener which triggers new data loading
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+
+            public void onRefresh() {
+
+                fetchTimelineAsync(0);
+
+            }
+
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+
+                android.R.color.holo_green_light,
+
+                android.R.color.holo_orange_light,
+
+                android.R.color.holo_red_light);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -279,33 +267,91 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-//                visibleItemCount = mRecyclerView.getChildCount();
-//                totalItemCount = mLayoutManager.getItemCount();
-//                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-//
-//                if (loading) {
-//                    if (totalItemCount > previousTotal) {
-//                        loading = false;
-//                        previousTotal = totalItemCount;
-//                    }
-//                }
-//                if (!loading && (totalItemCount - visibleItemCount)
-//                        <= (firstVisibleItem + visibleThreshold)) {
-//                    // End has been reached
-//                    loading = true;
-//
-//                    l++;
-//                    category = category + "&page=" + l;
-//                    getFeed(category);
-//                    mAdapter.notifyDataSetChanged();
-//                }
+                visibleItemCount = mRecyclerView.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
+                    // End has been reached
+                    loading = true;
+
+                    l++;
+                    category = category + "30";
+                    getFeed(category);
+                    mPostAdapter.notifyDataSetChanged();
+                }
             }
         });
 
-        //   MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
-
         return v;
     }
+
+    private void parseImage(JSONObject object) throws JSONException {
+        JSONObject images = object.getJSONObject("Images");
+        String image = images.getString("image");
+        String thumb = images.getString("thumb");
+        String big = images.getString("big");
+
+        JSONObject geoHr = object.getJSONObject("GeoHr");
+        String country = geoHr.getString("country");
+        String city = geoHr.getString("city");
+        String state = geoHr.getString("state");
+        String street = geoHr.getString("street");
+
+        post.setImage(image);
+        post.setBig(big);
+        post.setThumb(thumb);
+        post.setGeoHrCountry(country);
+        post.setGeoHrCity(city);
+        post.setGeoHrState(state);
+        post.setGeoHrStreet(street);
+
+    }
+
+    private void parseArticle(JSONObject object) throws JSONException {
+
+        ArrayList<CardImages> cardImages = new ArrayList<>();
+        ArrayList<GeoHr> geoHrs = new ArrayList<>();
+        String country = "";
+        String city = "";
+
+        String cover = object.getString("Cover");
+        JSONArray imagesA = object.getJSONArray("Images");
+        for (int ob = 0; ob < imagesA.length(); ob++) {
+            JSONObject jsonArrayImg = imagesA.getJSONObject(ob);
+            String imTitle = jsonArrayImg.getString("title");
+            String imBig = jsonArrayImg.getString("big");
+            String imUrl = jsonArrayImg.getString("url");
+
+            post.setThumb(cover);
+            cardImages.add(new CardImages(imTitle, "", "", imBig, imUrl));
+        }
+
+        JSONObject geoHr = object.getJSONObject("GeoHr");
+        JSONArray geoHrCountries = geoHr.getJSONArray("countries");
+        for (int i = 0; i < geoHrCountries.length(); i++) {
+            country = geoHrCountries.get(0).toString();
+
+        }
+
+        JSONArray geoHrCities = geoHr.getJSONArray("countries");
+        for (int i = 0; i < geoHrCities.length(); i++) {
+            city = geoHrCities.get(0).toString();
+
+        }
+
+        geoHrs.add(new GeoHr(country, city));
+        post.setGeoHrCity(city);
+        post.setGeoHrCountry(country);
+
+        }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -315,16 +361,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     }
 
     private void loadFeed() {
-
-        mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage("Loading Flower Data...");
-        mDialog.setCancelable(true);
-        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setIndeterminate(true);
-
         mPostAdapter.reset();
-
-        mDialog.show();
 
    //     if (getNetworkAvailability()) {
             getFeed(category);
@@ -346,26 +383,9 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     public void onResume() {
         super.onResume();
 
-        getView().setFocusableInTouchMode(true);
+  //      getView().setFocusableInTouchMode(true);
         getView().requestFocus();
     }
-
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//    }
-
-    public void clearGridView() {
-        posts.clear();
-    }
-
-//    @Override
-//    public void onClick(MainFeed post) {
-//        Intent intent = new Intent(getActivity(), DetailsActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//        intent.putExtra("POST_ITEM", post);
-//        getActivity().startActivity(intent);
-//    }
-
     @Override
     public void onClick(int position) {
         Post selectedPost = mPostAdapter.getSelectedPost(position);
@@ -373,4 +393,12 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
         intent.putExtra(Constants.REFERENCE.POST, selectedPost);
         startActivity(intent);
     }
+
+    public void fetchTimelineAsync(int page) {
+        loadFeed();
+        swipeContainer.setRefreshing(false);
+
+    }
+
 }
+
