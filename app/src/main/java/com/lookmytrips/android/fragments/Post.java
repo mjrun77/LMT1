@@ -1,9 +1,9 @@
 package com.lookmytrips.android.fragments;
 
-import com.lookmytrips.android.pojo.CardImages;
-import com.lookmytrips.android.pojo.Cat;
-import com.lookmytrips.android.pojo.Geo;
-import com.lookmytrips.android.pojo.Places;
+import com.lookmytrips.android.model.CardImages;
+import com.lookmytrips.android.model.Cat;
+import com.lookmytrips.android.model.Geo;
+import com.lookmytrips.android.model.Places;
 
 import java.io.Serializable;
 import java.util.ArrayList;

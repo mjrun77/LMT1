@@ -1,13 +1,8 @@
 package com.lookmytrips.android.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,11 +10,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.lookmytrips.android.R;
 import com.lookmytrips.android.fragments.Post;
 import com.lookmytrips.android.helper.Constants;
@@ -28,6 +25,8 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -53,31 +52,19 @@ public class DetailActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("");
 
-        getDetail(id);
-
-
+        // TODO: 15.09.2016  detail request
+     //   getDetail(post.getId());
 
         mTvDetailTitle = (TextView) findViewById(R.id.detail_title);
-        mTvDetailTitle.setText("");
-
+        mTvDetailTitle.setText(post.getTitle());
 
         mDetailUserName = (TextView) findViewById(R.id.detail_user_name);
-        mDetailUserName.setText("");
-
+        mDetailUserName.setText(post.getUserName());
         mIvDetailAvatar = (CircularImageView) findViewById(R.id.detail_avatar);
 
-           Picasso.with(this)
-               .load(post.getAvatar())
-             .into(mIvDetailAvatar);
-
-
-
-
-
-
-
-
-
+        Picasso.with(this)
+                .load(post.getAvatar())
+                .into(mIvDetailAvatar);
 
 
         ListView lv = (ListView) findViewById(R.id.list);
@@ -94,9 +81,6 @@ public class DetailActivity extends AppCompatActivity {
                 "item_3"
         );
 
-        // This is the array adapter, it takes the context of the activity as a
-        // first parameter, the type of list view as a second parameter and
-        // array as a third parameter.
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -124,9 +108,9 @@ public class DetailActivity extends AppCompatActivity {
         });
 
 //        TextView t = (TextView) findViewById(R.id.name);
-//        t.setText("hello");
+//        t.setText("");
 //        Button f = (Button) findViewById(R.id.follow);
-//        f.setText("follow");
+//        f.setText("");
 //        f.setMovementMethod(LinkMovementMethod.getInstance());
 //        f.setOnClickListener(new OnClickListener() {
 //            @Override
@@ -138,9 +122,7 @@ public class DetailActivity extends AppCompatActivity {
 //        });
     }
 
-    private void getDetail(String id) {
 
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -151,7 +133,6 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.detail, menu);
 //        MenuItem item = menu.findItem(R.id.action_toggle);
 //        if (mLayout != null) {
@@ -171,7 +152,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_share: {
 //                if (mLayout != null) {
 //                    if (mLayout.getPanelState() != PanelState.HIDDEN) {

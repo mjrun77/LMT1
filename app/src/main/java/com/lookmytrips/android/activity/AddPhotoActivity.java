@@ -45,7 +45,7 @@ public class AddPhotoActivity extends AppCompatActivity {
 
     private void selectImage() {
 
-        final CharSequence[] options = { "Сфотографировать", "Выбрать из галереи","Отмена" };
+        final CharSequence[] options = {"Сфотографировать", "Выбрать из галереи", "Отмена"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AddPhotoActivity.this);
         builder.setTitle("Добавить фото");
@@ -62,15 +62,11 @@ public class AddPhotoActivity extends AppCompatActivity {
                     //pic = f;
                     startActivityForResult(intent, 1);
 
-                }
-
-                else if (options[item].equals("Выбрать из галереи")) {
-                    Intent intent = new   Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                } else if (options[item].equals("Выбрать из галереи")) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
 
-                }
-
-                else if (options[item].equals("Отмена")) {
+                } else if (options[item].equals("Отмена")) {
                     dialog.dismiss();
 
                 }
@@ -90,16 +86,15 @@ public class AddPhotoActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
 
             if (requestCode == 1) {
-                //h=0;
+
                 File f = new File(Environment.getExternalStorageDirectory().toString());
 
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
                         f = temp;
                         File photo = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                        //pic = photo;
-                        break;
 
+                        break;
                     }
                 }
 
@@ -115,7 +110,7 @@ public class AddPhotoActivity extends AppCompatActivity {
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    //p = path;
+
                     f.delete();
                     OutputStream outFile = null;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
@@ -123,7 +118,6 @@ public class AddPhotoActivity extends AppCompatActivity {
                     try {
                         outFile = new FileOutputStream(file);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        //pic=file;
                         outFile.flush();
                         outFile.close();
 
@@ -141,8 +135,6 @@ public class AddPhotoActivity extends AppCompatActivity {
 
             } else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
-                // h=1;
-                //imgui = selectedImage;
                 String[] filePath = {MediaStore.Images.Media.DATA};
                 Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
                 c.moveToFirst();
@@ -157,4 +149,4 @@ public class AddPhotoActivity extends AppCompatActivity {
 
         }
     }
-    }
+}

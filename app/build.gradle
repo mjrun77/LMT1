@@ -21,24 +21,11 @@ android {
     defaultConfig.applicationId = "com.lookmytrips.android"
 }
 
-dependencies {
+    dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    //search
-    
-
-    //   compile 'com.facebook.android:facebook-android-sdk:4.+'
-    
-    //   compile 'com.github.asne:asne-twitter:0.3.3'
-    //   compile 'com.github.asne:asne-linkedin:0.3.3'
- //   compile 'com.github.asne:asne-instagram:0.3.3'
-    
-    
-    
-    compile 'com.squareup.picasso:picasso:2.5.2'
 
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:design:24.2.1'

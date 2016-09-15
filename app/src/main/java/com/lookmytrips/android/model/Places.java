@@ -1,4 +1,4 @@
-package com.lookmytrips.android.pojo;
+package com.lookmytrips.android.model;
 
 import java.io.Serializable;
 

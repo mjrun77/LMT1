@@ -1,11 +1,6 @@
-package com.lookmytrips.android.pojo;
+package com.lookmytrips.android.model;
 
 import java.io.Serializable;
-
-/**
- * Created by Win on 14.09.2016.
- */
-
 public class Geo implements Serializable{
 
     private String lat;

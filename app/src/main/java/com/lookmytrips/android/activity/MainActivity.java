@@ -32,8 +32,6 @@ import com.pkmmte.view.CircularImageView;
 
 import java.util.ArrayList;
 
-import at.grabner.circleprogress.CircleProgressView;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,7 +45,6 @@ public class MainActivity extends AppCompatActivity
     private String userAvatar;
     private String userName;
     private TextView tvUserName;
-    private CircleProgressView mCircleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +59,11 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.nav_photo);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -81,7 +76,6 @@ public class MainActivity extends AppCompatActivity
         });
 
         FloatingActionButton actionb = (FloatingActionButton) findViewById(R.id.add_albom);
-        //   actionb.setTitle("Добавить альбом");
         actionb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +83,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -102,9 +97,7 @@ public class MainActivity extends AppCompatActivity
         tvUserName = (TextView) header.findViewById(R.id.userName);
         tvUserName.setText(userName);
         CircularImageView ava = (CircularImageView) header.findViewById(R.id.card_avatar);
-        //   Picasso.with(this)
-        //       .load(userAvatar)
-        //     .into(ava);
+        //   Picasso.with(this).load(userAvatar).into(ava);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setVoiceSearch(true);

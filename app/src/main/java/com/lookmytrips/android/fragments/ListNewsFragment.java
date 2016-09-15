@@ -23,10 +23,10 @@ import com.lookmytrips.android.activity.DetailActivity;
 import com.lookmytrips.android.adapters.PostAdapter;
 import com.lookmytrips.android.helper.Constants;
 import com.lookmytrips.android.model.GeoHr;
-import com.lookmytrips.android.pojo.Cat;
-import com.lookmytrips.android.pojo.Geo;
-import com.lookmytrips.android.pojo.CardImages;
-import com.lookmytrips.android.pojo.Places;
+import com.lookmytrips.android.model.Cat;
+import com.lookmytrips.android.model.Geo;
+import com.lookmytrips.android.model.CardImages;
+import com.lookmytrips.android.model.Places;
 import com.lookmytrips.android.utils.Utils;
 import com.lookmytrips.android.utils.AppController;
 import com.lookmytrips.android.utils.SpaceItemDecoration;
@@ -38,11 +38,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 import static com.vk.sdk.VKUIHelper.getApplicationContext;
 
-public class ListNewsFragment extends Fragment implements PostAdapter.PostClickListener{
+public class ListNewsFragment extends Fragment implements PostAdapter.PostClickListener {
 
     int l = 1;
     LinearLayoutManager mLayoutManager;
@@ -108,7 +107,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         String comments = jsonObject.getString("Comments");
 
                         String type = jsonObject.getString("Type");
-                        if (type.equals("image")){
+                        if (type.equals("image")) {
                             parseImage(jsonObject);
                         } else if (type.equals("article")) {
                             parseArticle(jsonObject);
@@ -141,8 +140,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                             String lon = geoArray.get(1).toString();
                             geos.add(new Geo(lat, lon));
                         }
-//
-//
+
                         JSONArray catArray = jsonObject.getJSONArray("Cat");
                         for (int c = 0; c < catArray.length(); c++) {
                             String catTitle = catArray.get(c).toString();
@@ -165,7 +163,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                     Post post = posts.get(i);
 
 //                    SaveIntoDatabase task = new SaveIntoDatabase();
-//                    task.execute(flower);
+//                    task.execute(post);
 
                     try {
 
@@ -175,21 +173,21 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
 
                         JSONObject userObj = obj.getJSONObject("users");
 
-                    for (int j = 0; j < userObj.length(); j++) {
-                        JSONObject detailedUserObj = userObj.getJSONObject(post.getOwner());
+                        for (int j = 0; j < userObj.length(); j++) {
+                            JSONObject detailedUserObj = userObj.getJSONObject(post.getOwner());
 
-                        String avatar = detailedUserObj.getString("Avatar");
-                        String anguage = detailedUserObj.getString("Language");
-                        String name = detailedUserObj.getString("Name");
-                        String role = detailedUserObj.getString("Role");
+                            String avatar = detailedUserObj.getString("Avatar");
+                            String anguage = detailedUserObj.getString("Language");
+                            String name = detailedUserObj.getString("Name");
+                            String role = detailedUserObj.getString("Role");
 
-                        if (avatar.contains("null")){
-                            avatar ="http://img.lookmytrips.com/images/look62lj/57017057ff936741ad022f85-1bg2s2n.jpg";
+                            if (avatar.contains("null")) {
+                                avatar = "http://img.lookmytrips.com/images/look62lj/57017057ff936741ad022f85-1bg2s2n.jpg";
+                            }
+
+                            post.setAvatar(avatar);
+                            post.setUserName(name);
                         }
-
-                        post.setAvatar(avatar);
-                        post.setUserName(name);
-                    }
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
@@ -233,7 +231,6 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
 
         // Setup refresh listener which triggers new data loading
-
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -349,7 +346,7 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
         post.setGeoHrCity(city);
         post.setGeoHrCountry(country);
 
-        }
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -361,11 +358,11 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     private void loadFeed() {
         mPostAdapter.reset();
 
-   //     if (getNetworkAvailability()) {
-            getFeed(category);
-   //     } else {
-      //      getFeedFromDatabase();
-     //   }
+        //     if (getNetworkAvailability()) {
+        getFeed(category);
+        //     } else {
+        //      getFeedFromDatabase();
+        //   }
     }
 
     public boolean getNetworkAvailability() {
@@ -381,9 +378,10 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
     public void onResume() {
         super.onResume();
 
-  //      getView().setFocusableInTouchMode(true);
+        //      getView().setFocusableInTouchMode(true);
         getView().requestFocus();
     }
+
     @Override
     public void onClick(int position) {
         Post selectedPost = mPostAdapter.getSelectedPost(position);
