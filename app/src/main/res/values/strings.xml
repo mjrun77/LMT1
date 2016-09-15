@@ -22,4 +22,10 @@
     <string name="nav_settings">Настройки</string>
     <string name="nav_logout">Выход</string>
     <string name="action_bell">Notifications</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="action_share">Поделиться</string>
+    <string name="in_album">В альбоме</string>
+    <string name="gallery">Галерея</string>
+    <string name="long_text">In earlier versions of Access, we used the Memo data type to store large amounts of text, and the Text data type to store shorter strings (up to 255 characters). In Access 2013, these two data types have been renamed “Long Text” and “Short Text” respectively, and they have different properties and size limits depending on whether you’re using a desktop database or an Access App. Here are the details:
+    In earlier versions of Access, we used the Memo data type to store large amounts of text, and the Text data type to store shorter strings (up to 255 characters). In Access 2013, these two data types have been renamed “Long Text” and “Short Text” respectively, and they have different properties and size limits depending on whether you’re using a desktop database or an Access App. Here are the details:</string>
 </resources>

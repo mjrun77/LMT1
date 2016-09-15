@@ -1,9 +1,5 @@
 package com.lookmytrips.android.model;
 
-/**
- * Created by Win on 08.09.2016.
- */
-
 public class User {
     private String userName;
     private long id;

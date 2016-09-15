@@ -13,89 +13,90 @@
 
 
     <com.pkmmte.view.CircularImageView
+        android:id="@+id/card_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/card_avatar"
-        android:src="@drawable/ic_account_circle"
         android:layout_gravity="center_vertical"
-        app:border="true"
         android:scaleType="centerCrop"
+        android:src="@drawable/ic_account_circle"
+        app:border="true"
         app:border_color="#fff" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="16dp"
             android:text="User name"
-            android:textColor="@color/white"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/white" />
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:orientation="horizontal">
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/icon_trophy"
-            android:src="@drawable/icrating_1_menu"
-            android:baselineAlignBottom="true"
-            android:layout_width="20dp"
-            android:layout_height="25dp" />
-
-    <TextView
-        android:layout_toRightOf="@+id/icon_trophy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="5.53k"
-        android:layout_marginLeft="5dp"
-        android:padding="5dp"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:textColor="@color/light_grey"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-        </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp">
-
-        <ImageView
-            android:id="@+id/icon_medal"
-            android:src="@drawable/icrating_2_menu"
-            android:baselineAlignBottom="true"
-            android:layout_width="20dp"
-            android:layout_height="25dp" />
-
-        <TextView
-            android:layout_toRightOf="@+id/icon_medal"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7k"
-            android:layout_marginLeft="3dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textColor="@color/light_grey"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:orientation="horizontal">
 
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-    </RelativeLayout>
-</LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/icon_trophy"
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:baselineAlignBottom="true"
+                    android:src="@drawable/icrating_1_menu" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_trophy"
+                    android:padding="5dp"
+                    android:paddingTop="@dimen/nav_header_vertical_spacing"
+                    android:text="5.53k"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/light_grey" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp">
+
+                <ImageView
+                    android:id="@+id/icon_medal"
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:baselineAlignBottom="true"
+                    android:src="@drawable/icrating_2_menu" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/icon_medal"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="7k"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
+                    android:textColor="@color/light_grey" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

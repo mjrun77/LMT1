@@ -1,6 +1,5 @@
 package com.lookmytrips.android.pojo;
 
-
 import java.io.Serializable;
 
 public class Places implements Serializable {

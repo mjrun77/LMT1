@@ -1,6 +1,5 @@
 package com.lookmytrips.android.fragments;
 
-import com.lookmytrips.android.model.MainFeed;
 import com.lookmytrips.android.pojo.CardImages;
 import com.lookmytrips.android.pojo.Cat;
 import com.lookmytrips.android.pojo.Geo;

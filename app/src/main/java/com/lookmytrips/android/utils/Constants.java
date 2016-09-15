@@ -30,10 +30,6 @@ public class Constants {
     public static final String USER_ID = "1";
     public static final String PREFERENCES_LOGIN = "Login";
 
-
-
-
-
     public static final class HTTP {
         public static final String BASE_URL = "http://www.lookmytrips.com";
     }

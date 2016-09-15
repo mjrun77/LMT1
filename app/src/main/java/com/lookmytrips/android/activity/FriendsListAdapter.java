@@ -76,14 +76,6 @@ public class FriendsListAdapter extends BaseAdapter {
     private void colorRow(int networkId){
         int color = context.getResources().getColor(R.color.dark);
         switch (networkId) {
-//            case TwitterSocialNetwork.ID:
-//                color = context.getResources().getColor(R.color.twitter);
-//                image = R.drawable.twitter_user;
-//                break;
-//            case LinkedInSocialNetwork.ID:
-//                color = context.getResources().getColor(R.color.linkedin);
-//                image = R.drawable.linkedin_user;
-//                break;
             case FacebookSocialNetwork.ID:
                 color = context.getResources().getColor(R.color.colorPrimary);
                 image = R.drawable.com_facebook_profile_picture_blank_square;

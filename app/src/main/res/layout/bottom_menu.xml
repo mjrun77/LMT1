@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="8dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/card_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:text="Нравится"
+                android:textColor="@color/bottom_grey"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/card_iv_like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/card_like"
+                android:paddingLeft="3dp"
+                android:src="@drawable/ic_card_heart" />
+
+            <TextView
+                android:id="@+id/tv_card_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_like"
+                android:layout_toRightOf="@+id/card_iv_like"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"
+                android:text="1273"
+                android:textColor="@color/bottom_grey"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/card_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:text="Комментарий"
+                android:textColor="@color/bottom_grey"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/card_iv_comments"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/card_comments"
+                android:paddingLeft="3dp"
+                android:src="@drawable/ic_cardcomments" />
+
+            <TextView
+                android:id="@+id/tv_card_comments_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_comments"
+                android:layout_toEndOf="@+id/card_iv_comments"
+                android:layout_toRightOf="@+id/card_iv_comments"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"
+                android:text="12"
+                android:textColor="@color/bottom_grey"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/card_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:text="В избранное"
+                android:textColor="@color/bottom_grey"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/card_iv_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/card_favorite"
+                android:paddingLeft="3dp"
+                android:src="@drawable/ic_card_favorite" />
+
+            <TextView
+                android:id="@+id/tv_card_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_favorite"
+                android:layout_toRightOf="@+id/card_iv_favorite"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"
+                android:text="5"
+                android:textColor="@color/bottom_grey"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/card_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:text="Поделиться"
+                android:textColor="@color/bottom_grey"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/card_iv_share"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/card_share"
+                android:paddingLeft="3dp"
+                android:src="@drawable/ic_card_share" />
+
+            <TextView
+                android:id="@+id/tv_card_share_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_share"
+                android:layout_toRightOf="@+id/card_iv_share"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"
+                android:text="12"
+                android:textColor="@color/bottom_grey"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

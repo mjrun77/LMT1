@@ -43,14 +43,13 @@ public class FriendsFragment extends Fragment implements OnRequestGetFriendsComp
         SocialNetwork socialNetwork = LoginFragment.mSocialNetworkManager.getSocialNetwork(networkId);
         socialNetwork.setOnRequestGetFriendsCompleteListener(this);
         socialNetwork.requestGetFriends();
-        LoginActivity.showProgress("Loading friends");
+        LoginActivity.showProgress("Loading");
 
         return rootView;
     }
 
     @Override
     public void OnGetFriendsIdComplete(int id, String[] friendsID) {
-     //   ((LoginActivity)getActivity()).getSupportActionBar().setTitle(friendsID.length + " Friends");
     }
 
     @Override

@@ -118,7 +118,6 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                         post.setId(id);
                         post.setLikes(likes);
                         post.setOwner(owner);
-
                         post.setTitle(title);
                         post.setWasHere(wasHere);
                         post.setShares(shares);
@@ -194,7 +193,6 @@ public class ListNewsFragment extends Fragment implements PostAdapter.PostClickL
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
-
 
                     mPostAdapter.addPost(post);
                 }

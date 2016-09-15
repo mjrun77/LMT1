@@ -1,11 +1,6 @@
 package com.lookmytrips.android.adapters;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +11,6 @@ import com.lookmytrips.android.R;
 import com.lookmytrips.android.fragments.Post;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,9 +81,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
             super(itemView);
 
             mCircleView = (CircleProgressView) itemView.findViewById(R.id.circleView);
-            //   mCircleView.setSeekModeEnabled(true);
             mCircleView.setMaxValue(100);
-            //    mCircleView.setValue(44);
             mCircleView.setBarWidth(10);
             mCircleView.setRimWidth(10);
             mCircleView.setRimColor(itemView.getContext().getResources().getColor(R.color.light_grey));
@@ -100,15 +89,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder>{
             mCircleView.setBarColor(itemView.getContext().getResources().getColor(R.color.green));
             mCircleView.setUnitVisible(true);
             mCircleView.setUnit("%");
-//        mCircleView.setUnitColor();
-               mCircleView.setValueAnimated(24);
+//          mCircleView.setUnitColor();
+//          mCircleView.setValueAnimated(24);
 
-//                mCircleView.setTextSize(90); // text size set, auto text size off
-//        mCircleView.setUnitSize(90); // if i set the text size i also have to set the unit size
+//          mCircleView.setTextSize(90); // text size set, auto text size off
+//          mCircleView.setUnitSize(90); // if i set the text size i also have to set the unit size
             mCircleView.setAutoTextSize(true); // enable auto text size, previous values are overwritten
             //if you want the calculated text sizes to be bigger/smaller you can do so via
-//        mCircleView.setUnitScale(0.9f);
-//        mCircleView.setTextScale(0.9f);
+//          mCircleView.setUnitScale(0.9f);
+//          mCircleView.setTextScale(0.9f);
 
             mTitle = (TextView) itemView.findViewById(R.id.cardTitle);
             mPlace = (TextView) itemView.findViewById(R.id.tv_card_place);

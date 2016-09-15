@@ -48,7 +48,7 @@ public class AddPhotoActivity extends AppCompatActivity {
         final CharSequence[] options = { "Сфотографировать", "Выбрать из галереи","Отмена" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AddPhotoActivity.this);
-        builder.setTitle("Добавить фото!");
+        builder.setTitle("Добавить фото");
         builder.setItems(options, new DialogInterface.OnClickListener() {
 
             @Override
@@ -84,7 +84,6 @@ public class AddPhotoActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
 
         //for photos

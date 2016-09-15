@@ -2,7 +2,6 @@ package com.lookmytrips.android.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,8 +29,8 @@ import com.lookmytrips.android.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
-    private String message = "Need simple social networks integration? Check this lbrary:";
-    private String link = "https://github.com/gorbin/ASNE";
+    private String message = "Check this:";
+    private String link = "http://lookmytrips.com";
 
     private static final String NETWORK_ID = "NETWORK_ID";
     private SocialNetwork socialNetwork;
@@ -44,7 +43,6 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private Button share;
     private RelativeLayout frame;
     private SharedPreferences pref;
-
 
     public static ProfileFragment newInstannce(int id) {
         ProfileFragment fragment = new ProfileFragment();
@@ -62,7 +60,6 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         networkId = getArguments().containsKey(NETWORK_ID) ? getArguments().getInt(NETWORK_ID) : 0;
-//        ((LoginActivity)getActivity()).getSupportActionBar().setTitle("Profile");
         pref = getActivity().getSharedPreferences(Constants.PREFERENCES_LOGIN, 0);
         View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
 
@@ -81,7 +78,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
         socialNetwork.requestCurrentPerson();
 
-        LoginActivity.showProgress("Loading social person");
+        LoginActivity.showProgress("Loading");
         return rootView;
     }
 
@@ -114,7 +111,6 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         editor.putString(Constants.USER_ID, socialPerson.id);
         editor.putString(Constants.NAME, socialPerson.name);
         editor.apply();
-     //   startActivity(new Intent(getActivity(), MainActivity.class));
 
         name.setText(socialPerson.name);
         id.setText(socialPerson.id);
@@ -150,7 +146,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
             ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Bundle postParams = new Bundle();
-                    postParams.putString(SocialNetwork.BUNDLE_NAME, "Simple and easy way to add social networks for android application");
+                    postParams.putString(SocialNetwork.BUNDLE_NAME, "Simple and easy share with friends");
                     postParams.putString(SocialNetwork.BUNDLE_LINK, link);
                     if(networkId == GooglePlusSocialNetwork.ID) {
                         socialNetwork.requestPostDialog(postParams, postingComplete);
@@ -190,14 +186,6 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         int color = getResources().getColor(R.color.dark);
         int image = R.drawable.user;
         switch (networkId) {
-//            case TwitterSocialNetwork.ID:
-//                color = getResources().getColor(R.color.twitter);
-//                image = R.drawable.twitter_user;
-//                break;
-//            case LinkedInSocialNetwork.ID:
-//                color = getResources().getColor(R.color.linkedin);
-//                image = R.drawable.linkedin_user;
-//                break;
             case GooglePlusSocialNetwork.ID:
                 color = getResources().getColor(R.color.colorAccent);
                 image = R.drawable.user;

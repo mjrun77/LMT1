@@ -64,7 +64,6 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
         //Chose permissions
         ArrayList<String> fbScope = new ArrayList<String>();
         fbScope.addAll(Arrays.asList("public_profile, email, user_friends"));
-        String linkedInScope = "r_basicprofile+r_fullprofile+rw_nus+r_network+w_messages+r_emailaddress+r_contactinfo";
 
         //Use manager to manage SocialNetworks
         mSocialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(LoginActivity.SOCIAL_NETWORK_TAG);
@@ -139,7 +138,7 @@ public class LoginFragment extends Fragment implements SocialNetworkManager.OnIn
             if(!socialNetwork.isConnected()) {
                 if(networkId != 0) {
                     socialNetwork.requestLogin();
-                    LoginActivity.showProgress("Loading social person");
+                    LoginActivity.showProgress("Loading");
                 } else {
                     Toast.makeText(getActivity(), "Wrong networkId", Toast.LENGTH_LONG).show();
                 }

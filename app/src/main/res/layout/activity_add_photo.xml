@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_horizontal_margin">
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        >
+        android:layout_height="120dp">
 
         <ImageView
             android:id="@+id/redIvItem"
             android:layout_width="150dp"
             android:layout_height="120dp"
-            android:src="@drawable/add_circle_grey"/>
+            android:src="@drawable/add_circle_grey" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/redIvItem"
-            android:textColor="@color/black"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/redIvItem"
             android:text="Парк Гуэля, Барселона"
-            android:textSize="18sp"/>
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:alpha="0.1"
-        android:background="#000000"
         android:layout_marginTop="2dp"
-        android:id="@+id/line"/>
+        android:alpha="0.1"
+        android:background="#000000" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,39 +41,39 @@
 
         <ImageView
             android:id="@+id/redIvIconNone"
-            android:src="@mipmap/ic_map_marker_black"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ic_map_marker_black" />
 
         <TextView
             android:id="@+id/redTvPlaceNone"
-            android:layout_toRightOf="@+id/redIvIconNone"
-            android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/redIvIconNone"
             android:text="Местоположение"
-            android:textColor="@color/grey_light"/>
+            android:textColor="@color/grey_light" />
 
         <TextView
             android:id="@+id/redIvTeNone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/redIvIconNone"
-            android:layout_marginLeft="16dp"
-            android:text="Испания, Барселона"
             android:layout_below="@id/redTvPlaceNone"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/redIvIconNone"
+            android:text="Испания, Барселона"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginTop="2dp"/>
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:alpha="0.1"
-            android:background="#000000"
+            android:layout_below="@id/redIvTeNone"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/redIvTeNone"/>
+            android:alpha="0.1"
+            android:background="#000000" />
 
     </RelativeLayout>
 
@@ -84,31 +84,31 @@
 
         <ImageView
             android:id="@+id/redIvIcon2None"
-            android:src="@mipmap/ic_view_grid_black"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ic_view_grid_black" />
 
         <TextView
             android:id="@+id/redTvPlacesNone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Категория"
-            android:layout_toRightOf="@id/redIvIcon2None"
             android:layout_marginLeft="16dp"
-            android:textColor="@color/light_grey"/>
+            android:layout_toRightOf="@id/redIvIcon2None"
+            android:text="Категория"
+            android:textColor="@color/light_grey" />
 
         <TextView
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/redTvPlacesNone"
+            android:layout_marginLeft="16dp"
+            android:layout_toEndOf="@+id/redIvIcon2None"
+            android:layout_toRightOf="@+id/redIvIcon2None"
             android:text="Места"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginLeft="16dp"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/redTvPlacesNone"
-            android:layout_toRightOf="@+id/redIvIcon2None"
-            android:layout_toEndOf="@+id/redIvIcon2None" />
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
@@ -116,23 +116,23 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="10dp"
         android:alpha="0.1"
-        android:background="#000000"
-        android:layout_marginTop="10dp"/>
+        android:background="#000000" />
 
     <EditText
         android:layout_width="match_parent"
-        android:hint="Добавить описание..."
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:hint="Добавить описание..." />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:alpha="0.1"
-        android:background="#000000"
+        android:layout_below="@id/redIvTeNone"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/redIvTeNone"/>
+        android:alpha="0.1"
+        android:background="#000000" />
 
 
     <RelativeLayout
@@ -142,41 +142,40 @@
 
         <ImageView
             android:id="@+id/redIvCatNone"
-            android:src="@mipmap/ic_apps_black"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ic_apps_black" />
 
         <TextView
             android:id="@+id/redTvGNone"
-            android:layout_toRightOf="@+id/redIvCatNone"
-            android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/redIvCatNone"
             android:text="В альбоме"
-            android:textColor="@color/light_grey"/>
-
+            android:textColor="@color/light_grey" />
 
 
         <TextView
             android:id="@+id/redIvTexNone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Галерея"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_below="@+id/redTvGNone"
-
             android:layout_alignLeft="@+id/redTvGNone"
-            android:layout_alignStart="@+id/redTvGNone" />
+            android:layout_alignStart="@+id/redTvGNone"
+            android:layout_below="@+id/redTvGNone"
+            android:text="Галерея"
+
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:alpha="0.1"
-            android:background="#000000"
+            android:layout_below="@+id/redIvTexNone"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/redIvTexNone"/>
+            android:alpha="0.1"
+            android:background="#000000" />
 
     </RelativeLayout>
 
@@ -185,21 +184,21 @@
         android:layout_height="wrap_content">
 
         <Switch
-            android:text="Опубликовать на модерацию"
-            android:textSize="18sp"
-            android:textColor="@color/black"
+            android:id="@+id/switch1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:id="@+id/switch1" />
+            android:text="Опубликовать на модерацию"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="10dp"
         android:alpha="0.1"
-        android:background="#000000"
-        android:layout_marginTop="10dp"/>
+        android:background="#000000" />
 
 </LinearLayout>
